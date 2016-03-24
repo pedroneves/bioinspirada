@@ -49,12 +49,13 @@ def crossOver(p1, p2, n, b):
     return [c1,c2]
 
 def mutate(p, n, b):
-    n1 = randint(0,n-1)*b
-    n2 = randint(0,n-1)*b
-    r1 = p[n2:n2+b]
-    r2 = p[n1:n1+b]
-    p = p[:n1] + r1 + p[n1+b:]
-    p = p[:n2] + r2 + p[n2+b:]
+    if(random() < 0.8):
+        n1 = randint(0,n-1)*b
+        n2 = randint(0,n-1)*b
+        r1 = p[n2:n2+b]
+        r2 = p[n1:n1+b]
+        p = p[:n1] + r1 + p[n1+b:]
+        p = p[:n2] + r2 + p[n2+b:]
     return p
 
 def toInt(p, b):
