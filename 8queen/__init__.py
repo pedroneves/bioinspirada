@@ -41,6 +41,8 @@ def __init__():
     print 'Winner ' + str(species[0])
     print 'Winner ' + str(toInt(species[0].code, b))
     try:
+        import matplotlib
+        matplotlib.use('Agg')
         import matplotlib.pyplot as plt
         plt.title(str(n_queen) + ' Queen\'s problem with Evolutionary Computation.')
         plt.plot(mean, '-', label='Mean')
@@ -49,7 +51,8 @@ def __init__():
         plt.ylabel('Fitnnes')
         plt.xlabel('Interation')
         plt.legend(loc='best', shadow=True)
-        plt.show()
+        # plt.show()
+        plt.savefig('plot')
     except:
         print 'attection: impossible to plot the grafic, verify if you have matplotlib installed.'
 
