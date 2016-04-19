@@ -33,7 +33,7 @@ class Genetics:
             if self.preIteration is not None:
                 self.preIteration(self.iterations, self.population)
 
-            self.population = self.surviving(self.mutation(self.recombination(self.selection(self.population))))
+            self.population = self.surviving(self.population, self.mutation(self.recombination(self.selection(self.population))))
 
             if self.postIteration is not None:
                 self.postIteration(self.iterations, self.population)
@@ -47,7 +47,6 @@ class Genetics:
     def setInitialization (self, initfn):
         if hasattr(initfn, '__call__'):
             self.initialization = initfn
-
 
     def setPreIteration (self, preiterfn):
         if hasattr(preiterfn, '__call__'):
