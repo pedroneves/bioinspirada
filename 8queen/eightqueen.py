@@ -265,8 +265,9 @@ def plotMaxAvgLog ():
             'cap' + str(popcap)
         )
 
-    except:
+    except Exception, e:
         print 'attection: impossible to plot the grafic, verify if you have matplotlib installed.'
+        print 'What went wrong: '+ str(e)
 
 ags = Genetics()
 ags.setInitialization(getattr(current_module, initializationfnid))
