@@ -94,6 +94,13 @@ def maxfitness (population):
         m = max(m, i['fitness'])
     return m
 
+def avgfitness (population):
+    m = 0
+    for i in population:
+        m = m + i['fitness']
+    m = m / len(population)
+    return m
+
 def stop(iterations, population):
     return iterations >= maxiterations or maxfitness(population) == 1.0
 
@@ -220,12 +227,46 @@ def replaceWorst (pop, offspring):
             return -1
     return sorted(pop, descending)[0:popcap]
 
-def getBetterSolution(pop):
+def getBestSolution(pop):
     b = None
     for i in pop:
         if b is None or i['fitness'] > b['fitness']:
-            b = i            
+            b = i
     return b
+
+avglog = []
+maxlog = []
+def logger (iters, pop):
+    avglog.append(avgfitness(pop))
+    maxlog.append(maxfitness(pop))
+
+def plotMaxAvgLog (log):
+    try:
+        import matplotlib
+        matplotlib.use('Agg')
+        import matplotlib.pyplot as plt
+        plt.title('8 Queen\'s problem with Evolutionary Computation.')
+        plt.plot(avglog, '-', label='Mean')
+        plt.plot(maxlog, '-.', label='Best')
+        # plt.plot([(FitCounter.counter - n_species)/2], [mean[-1]], '-o')
+        plt.ylabel('Fitnnes')
+        plt.xlabel('Interation')
+        plt.legend(loc='best', shadow=True)
+        plt.savefig(
+            'plot-' +
+            str(initializationfnid) + '-' +
+            str(fitnessfnid) + '-' +
+            str(selectionfnid) + '-' +
+            str(recombinationfnid) + '-' +
+            str(mutationfnid) + '-' +
+            str(survivingfnid) + '-' +
+            'mit' + str(maxiterations) + '-'
+            'mtp' + str(mutprob) + '-'
+            'cap' + str(popcap)
+        )
+
+    except:
+        print 'attection: impossible to plot the grafic, verify if you have matplotlib installed.'
 
 ags = Genetics()
 ags.setInitialization(getattr(current_module, initializationfnid))
@@ -234,6 +275,7 @@ ags.setSelection(getattr(current_module, selectionfnid))
 ags.setRecombination(getattr(current_module, recombinationfnid))
 ags.setMutation(mutate)
 ags.setSurviving(getattr(current_module, survivingfnid))
+ags.setPostIteration(logger)
 p = ags.run()
-best = getBetterSolution(p)
+best = getBestSolution(p)
 print "Max fitness {0} and phenotype {1}".format(best['fitness'], gtp(best['genotype']))
