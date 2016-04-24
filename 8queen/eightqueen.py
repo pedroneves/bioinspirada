@@ -103,7 +103,7 @@ def logger (iters, pop):
     avglog.append(avgfitness(pop))
     maxlog.append(maxfitness(pop))
 
-def plotMaxAvgLog ():
+def plotMaxAvgLog (avglog, maxlog):
 
     # Creates a dir to contain the ploting graphs for the current configuration
     plotDir = 'plot-' + str(initializationfnid) + '-' + str(fitnessfnid) + '-' + str(selectionfnid) + '-' + str(recombinationfnid) + '-' + str(mutationfnid) + '-' + str(survivingfnid) + '-' + 'mit' + str(maxiterations) + '-' + 'mtp' + str(mutprob) + '-' + 'cap' + str(popcap)
@@ -368,7 +368,7 @@ if run:
 
         if isPlotting:
             print "Plotting..."
-            plotMaxAvgLog()
+            plotMaxAvgLog(avglog, maxlog)
 
         best = getBestSolution(superiorRace)
         print "Test #{2}: Max fitness {0} and phenotype {1}".format(best['fitness'], gtp(best['genotype']), test)
