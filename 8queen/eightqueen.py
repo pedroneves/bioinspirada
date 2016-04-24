@@ -128,6 +128,7 @@ def plotMaxAvgLog (avglog, maxlog):
         plt.xlabel('Iterations')
         plt.legend(loc='best', shadow=True)
         plt.savefig( os.path.join(plotDir, str(order) + '.png' ))
+        plt.clf()
 
     except Exception, e:
         print 'attection: impossible to plot the grafic, verify if you have matplotlib installed.'
@@ -365,7 +366,7 @@ if run:
         ags.setSurviving(getattr(current_module, survivingfnid))
         ags.setPostIteration(logger)
         superiorRace = ags.run()
-
+        
         if isPlotting:
             print "Plotting..."
             plotMaxAvgLog(avglog, maxlog)
