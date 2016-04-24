@@ -269,6 +269,22 @@ def swapMutation (solution):
 
     return r
 
+def simpleMutation (solution):
+    i = 0
+    mutatedGenotype = range(len(solution['genotype']))
+    while (i < len(solution['genotype'])):
+        if(random.random() < mutprob):
+            mutatedGenotype[i] = str((int(solution['genotype'][i]) + 1) % 2)
+        else:
+            mutatedGenotype[i] = solution['genotype'][i]
+        i += 1
+
+    r = individual()
+    r['genotype'] = "".join(mutatedGenotype)
+    r['fitness'] = fitnessfn(r['genotype'])
+
+    return r
+
 # Exptects an array of children (solutions) from the recombination phase
 def mutate (children):
     offspring = []
