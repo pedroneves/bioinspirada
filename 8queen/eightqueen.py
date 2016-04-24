@@ -1,6 +1,7 @@
 import random
 from genetics import Genetics
 import sys
+import os
 
 current_module = sys.modules[__name__]
 
@@ -241,29 +242,30 @@ def logger (iters, pop):
     maxlog.append(maxfitness(pop))
 
 def plotMaxAvgLog ():
-    try:
+    
+    # Creates a dir to contain the ploting graphs for the current configuration
+    plotDir = 'plot-' + str(initializationfnid) + '-' + str(fitnessfnid) + '-' + str(selectionfnid) + '-' + str(recombinationfnid) + '-' + str(mutationfnid) + '-' + str(survivingfnid) + '-' + 'mit' + str(maxiterations) + '-' + 'mtp' + str(mutprob) + '-' + 'cap' + str(popcap)
+    if not os.path.exists(plotDir):
+        os.makedirs(plotDir)
+        
+    # Checks the plotting order
+    order = 1
+    plotDirFiles = [f for f in os.listdir(plotDir) if os.path.isfile(os.path.join(plotDir, f))]
+    order = len(plotDirFiles) + 1
+    
+    try:    
         import matplotlib
         matplotlib.use('Agg')
         import matplotlib.pyplot as plt
+        
+        # Plotting
         plt.title('8 Queen\'s problem with Evolutionary Computation.')
-        plt.plot(avglog, '-', label='Mean')
-        plt.plot(maxlog, '-.', label='Best')
-        # plt.plot([(FitCounter.counter - n_species)/2], [mean[-1]], '-o')
-        plt.ylabel('Fitnnes')
-        plt.xlabel('Interation')
+        plt.plot(avglog, '-', label='Avg')
+        plt.plot(maxlog, '-.', label='Max')
+        plt.ylabel('Fitness')
+        plt.xlabel('Iterations')
         plt.legend(loc='best', shadow=True)
-        plt.savefig(
-            'plot-' +
-            str(initializationfnid) + '-' +
-            str(fitnessfnid) + '-' +
-            str(selectionfnid) + '-' +
-            str(recombinationfnid) + '-' +
-            str(mutationfnid) + '-' +
-            str(survivingfnid) + '-' +
-            'mit' + str(maxiterations) + '-'
-            'mtp' + str(mutprob) + '-'
-            'cap' + str(popcap)
-        )
+        plt.savefig( os.path.join(plotDir, str(order) + '.png' ))
 
     except Exception, e:
         print 'attection: impossible to plot the grafic, verify if you have matplotlib installed.'
