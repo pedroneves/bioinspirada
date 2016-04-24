@@ -240,7 +240,7 @@ def logger (iters, pop):
     avglog.append(avgfitness(pop))
     maxlog.append(maxfitness(pop))
 
-def plotMaxAvgLog (log):
+def plotMaxAvgLog ():
     try:
         import matplotlib
         matplotlib.use('Agg')
@@ -277,5 +277,6 @@ ags.setMutation(mutate)
 ags.setSurviving(getattr(current_module, survivingfnid))
 ags.setPostIteration(logger)
 p = ags.run()
+plotMaxAvgLog()
 best = getBestSolution(p)
 print "Max fitness {0} and phenotype {1}".format(best['fitness'], gtp(best['genotype']))
