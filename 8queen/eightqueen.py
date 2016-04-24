@@ -366,11 +366,11 @@ if run:
         ags.setSurviving(getattr(current_module, survivingfnid))
         ags.setPostIteration(logger)
         superiorRace = ags.run()
-        
+
         if isPlotting:
             print "Plotting..."
             plotMaxAvgLog(avglog, maxlog)
 
         best = getBestSolution(superiorRace)
-        print "Test #{2}: Max fitness {0} and phenotype {1}".format(best['fitness'], gtp(best['genotype']), test)
+        print "Test #{2}: Max fitness {0} and phenotype {1}".format(best['fitness'], gtp(best['genotype']), (test+1))
         test += 1
