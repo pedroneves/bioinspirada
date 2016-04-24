@@ -41,6 +41,7 @@ class Genetics:
             self.iterations += 1
 
         print('Evolution terminated after {0} iterations'.format(self.iterations))
+        self.iterations = 0
 
         return self.population
 
