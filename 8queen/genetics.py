@@ -40,7 +40,7 @@ class Genetics:
 
             self.iterations += 1
 
-        print('Evolution terminated after {0} iterations'.format(self.iterations))
+        print('Evolution terminated after {0} iterations and a population with {1} individuals'.format(self.iterations, len(self.population)))
         self.iterations = 0
 
         return self.population
