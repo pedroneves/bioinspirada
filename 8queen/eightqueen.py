@@ -7,17 +7,18 @@ import json
 
 current_module = sys.modules[__name__]
 
-testAmount = 10
+testAmount = 30
 avglog = []
 maxlog = []
 savingJson = True
-isPlotting = True
+isPlotting = False
 run = True
 
 # AGS params
 maxiterations = 10000
 mutprob = 0.8
 popcap = 100
+maxage = 5
 initializationfnid = 'randominit'
 fitnessfnid = 'collisionFitness'
 selectionfnid = 'tournament'
@@ -75,7 +76,8 @@ def individual ():
 
     i = {
         'genotype': ptg(phenotype),
-        'fitness': 0
+        'fitness': 0,
+        'age': 0
     }
 
     i['fitness'] = fitnessfn(i['genotype'])
@@ -547,6 +549,18 @@ def replaceWorst (pop, offspring):
         else:
             return -1
     return sorted(pop, descending)[0:popcap]
+
+def generation (pop, offspring):
+    def aging (i):
+        i['age'] = i['age'] + 1
+        return i
+
+    def alive (i):
+        return i['age'] < maxage
+
+    agedPop = filter(alive, map(aging, pop))
+    agedPop.extend(offspring)
+    return agedPop
 
 
 ###############################
