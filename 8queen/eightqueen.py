@@ -111,35 +111,36 @@ def logger (iters, pop):
     avglog.append(avgfitness(pop))
     maxlog.append(maxfitness(pop))
 
+def logDir ():
+    return 'log-' + str(initializationfnid) + '-' + str(fitnessfnid) + '-' + str(selectionfnid) + '-' + str(recombinationfnid) + '-' + str(mutationfnid) + '-' + str(survivingfnid) + '-' + 'mit' + str(maxiterations) + '-' + 'mtp' + str(mutprob) + '-' + 'cap' + str(popcap)
+
 def jsonMaxAvgLog (avglog, maxlog):
     data = {}
     data['iterations'] = len(avglog)
     data['avglog'] = avglog
     data['maxlog'] = maxlog
 
-    # Creates a dir to contain the ploting graphs for the current configuration
-    plotDir = 'plot-' + str(initializationfnid) + '-' + str(fitnessfnid) + '-' + str(selectionfnid) + '-' + str(recombinationfnid) + '-' + str(mutationfnid) + '-' + str(survivingfnid) + '-' + 'mit' + str(maxiterations) + '-' + 'mtp' + str(mutprob) + '-' + 'cap' + str(popcap)
-    if not os.path.exists(plotDir):
-        os.makedirs(plotDir)
+    # Creates a dir to contain the logs of tests for the current execution
+    if not os.path.exists(logDir()):
+        os.makedirs(logDir())
 
     # Checks the plotting order
     order = 1
-    plotDirFiles = [int(f.split(".")[0]) for f in os.listdir(plotDir) if (os.path.isfile(os.path.join(plotDir, f)) and f.split(".")[1] == "json")]
-    order = 1 + (max(plotDirFiles) if len(plotDirFiles) > 0 else 0)
+    logDirFiles = [int(f.split(".")[0]) for f in os.listdir(logDir()) if (os.path.isfile(os.path.join(logDir(), f)) and f.split(".")[1] == "json")]
+    order = 1 + (max(logDirFiles) if len(logDirFiles) > 0 else 0)
 
-    with open(os.path.join(plotDir, str(order) + '.json'), 'w') as outfile:
+    with open(os.path.join(logDir(), str(order) + '.json'), 'w') as outfile:
         json.dump(data, outfile)
 
 def plotMaxAvgLog (avglog, maxlog):
 
     # Creates a dir to contain the ploting graphs for the current configuration
-    plotDir = 'plot-' + str(initializationfnid) + '-' + str(fitnessfnid) + '-' + str(selectionfnid) + '-' + str(recombinationfnid) + '-' + str(mutationfnid) + '-' + str(survivingfnid) + '-' + 'mit' + str(maxiterations) + '-' + 'mtp' + str(mutprob) + '-' + 'cap' + str(popcap)
-    if not os.path.exists(plotDir):
-        os.makedirs(plotDir)
+    if not os.path.exists(logDir):
+        os.makedirs(logDir)
 
     # Checks the plotting order
     order = 1
-    plotDirFiles = [int(f.split(".")[0]) for f in os.listdir(plotDir) if (os.path.isfile(os.path.join(plotDir, f)) and f.split(".")[1] == "png")]
+    plotDirFiles = [int(f.split(".")[0]) for f in os.listdir(logDir) if (os.path.isfile(os.path.join(logDir, f)) and f.split(".")[1] == "png")]
     order = 1 + (max(plotDirFiles) if len(plotDirFiles) > 0 else 0)
 
     try:
@@ -154,7 +155,7 @@ def plotMaxAvgLog (avglog, maxlog):
         plt.ylabel('Fitness')
         plt.xlabel('Iterations')
         plt.legend(loc='best', shadow=True)
-        plt.savefig( os.path.join(plotDir, str(order) + '.png' ))
+        plt.savefig( os.path.join(logDir, str(order) + '.png' ))
         plt.clf()
 
     except Exception, e:
