@@ -1,3 +1,10 @@
+#
+#
+# This script is responsable to analyze all the test logs and give a comparative
+# view of the average iteration and the standard deviation for each test.
+#
+#
+
 import os
 import json
 
@@ -48,7 +55,8 @@ testLogs = map(getLogIterations, testDirs)
 testAvgs = map(avgLogIterations, testLogs)
 testStds = map(sdLogIterations, testLogs)
 
+print 'Iteration analysis'
 i = 0
 while i < len(testDirs):
-    print '\n{0}\n\tavg:{1}\n\tsd:{2}'.format(" ".join(testDirs[i].split("-")[1:]), testAvgs[i], testStds[i])
+    print '\n{0}\n\tavg: {1}\n\tsd: {2}'.format(" ".join(testDirs[i].split("-")[1:]), testAvgs[i], testStds[i])
     i+=1
