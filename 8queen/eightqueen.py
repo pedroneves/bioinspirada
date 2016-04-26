@@ -553,7 +553,6 @@ def replaceWorst (pop, offspring):
 # RUN
 ###############################
 if run:
-    print "Running..."
     ags = Genetics()
 
     test = 0
@@ -571,7 +570,6 @@ if run:
         superiorRace = ags.run()
 
         if isPlotting:
-            print "Plotting..."
             plotMaxAvgLog(avglog, maxlog)
 
         if savingJson:
