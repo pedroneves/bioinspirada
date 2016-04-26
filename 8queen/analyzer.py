@@ -40,7 +40,7 @@ def getLogIterations (logDirectory):
     return iterations
 
 def avgLogIterations (l):
-    return sum(l)/len(l)
+    return (sum(l) + 0.0)/len(l)
 
 def sdLogIterations (l):
     try:
