@@ -104,14 +104,32 @@ testDirs = getLogDirs()
 testLogs = map(getLogData, testDirs)
 
 print 'Analysis'
-i = 0
-while i < len(testLogs):
-    print 'Test {0}\n\tConvergence: {1}\n\tIterations\n\t  avg: {2}\n\t  sd: {3}\n\tFitness\n\t  avg: {4}\n\t  sd: {5}'.format(
-        testLogs[i]['strategy'],
-        testLogs[i]['statistics']['convergence'],
-        testLogs[i]['statistics']['iterations']['avg'],
-        testLogs[i]['statistics']['iterations']['sd'],
-        testLogs[i]['statistics']['fitness']['avg'],
-        testLogs[i]['statistics']['fitness']['sd'],
-    )
-    i+=1
+with open('analysis.csv', 'w') as csvfile:
+    csvfile.write('{0};{1};{2};{3};{4};{5};\n'.format(
+        'strategy',
+        'convergence',
+        'avg-iterations',
+        'sd-iterations',
+        'avg-fitness',
+        'sd-fitness'
+    ))
+
+    i = 0
+    while(i < len(testLogs)):
+        csvfile.write('{0};{1};{2};{3};{4};{5};\n'.format(
+            testLogs[i]['strategy'],
+            testLogs[i]['statistics']['convergence'],
+            testLogs[i]['statistics']['iterations']['avg'],
+            testLogs[i]['statistics']['iterations']['sd'],
+            testLogs[i]['statistics']['fitness']['avg'],
+            testLogs[i]['statistics']['fitness']['sd'],
+        ))
+        print 'Test {0}\n\tConvergence: {1}\n\tIterations\n\t  avg: {2}\n\t  sd: {3}\n\tFitness\n\t  avg: {4}\n\t  sd: {5}'.format(
+            testLogs[i]['strategy'],
+            testLogs[i]['statistics']['convergence'],
+            testLogs[i]['statistics']['iterations']['avg'],
+            testLogs[i]['statistics']['iterations']['sd'],
+            testLogs[i]['statistics']['fitness']['avg'],
+            testLogs[i]['statistics']['fitness']['sd'],
+        )
+        i += 1
