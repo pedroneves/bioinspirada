@@ -18,7 +18,7 @@ run = True
 maxiterations = 10000
 mutprob = 0.8
 popcap = 100
-maxage = 5
+maxage = 1
 initializationfnid = 'randominit'
 fitnessfnid = 'collisionFitness'
 selectionfnid = 'rank2outof5random'
@@ -112,7 +112,7 @@ def logger (iters, pop):
     maxlog.append(maxfitness(pop))
 
 def logDir ():
-    return 'log-' + str(initializationfnid) + '-' + str(fitnessfnid) + '-' + str(selectionfnid) + '-' + str(recombinationfnid) + '-' + str(mutationfnid) + '-' + str(survivingfnid) + '-' + 'mit' + str(maxiterations) + '-' + 'mtp' + str(mutprob) + '-' + 'cap' + str(popcap)
+    return 'log-' + str(initializationfnid) + '-' + str(fitnessfnid) + '-' + str(selectionfnid) + '-' + str(recombinationfnid) + '-' + str(mutationfnid) + '-' + str(survivingfnid) + '-' + 'mit' + str(maxiterations) + '-' + 'mtp' + str(mutprob) + '-' + 'cap' + str(popcap) + '-mage' + str(maxage)
 
 def jsonLog (avglog, maxlog):
     data = {}
