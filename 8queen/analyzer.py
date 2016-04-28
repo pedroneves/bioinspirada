@@ -105,8 +105,9 @@ testLogs = map(getLogData, testDirs)
 
 print 'Analysis'
 with open('analysis.csv', 'w') as csvfile:
-    csvfile.write('{0};{1};{2};{3};{4};{5};\n'.format(
+    csvfile.write('{0};{1};{2};{3};{4};{5};{6};\n'.format(
         'strategy',
+        'order',
         'convergence',
         'avg-iterations',
         'sd-iterations',
@@ -116,8 +117,9 @@ with open('analysis.csv', 'w') as csvfile:
 
     i = 0
     while(i < len(testLogs)):
-        csvfile.write('{0};{1};{2};{3};{4};{5};\n'.format(
+        csvfile.write('{0};{1};{2};{3};{4};{5};{6}\n'.format(
             testLogs[i]['strategy'],
+            str(i),
             testLogs[i]['statistics']['convergence'],
             testLogs[i]['statistics']['iterations']['avg'],
             testLogs[i]['statistics']['iterations']['sd'],
