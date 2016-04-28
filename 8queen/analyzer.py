@@ -68,7 +68,11 @@ def getLogData (logDirectory):
                 'avg': 0,
                 'sd': 0
             },
-            'fitness': {
+            'avgfitness': {
+                'avg': 0,
+                'sd': 0
+            },
+            'maxfitness': {
                 'avg': 0,
                 'sd': 0
             }
@@ -93,8 +97,11 @@ def getLogData (logDirectory):
     log['statistics']['iterations']['avg'] = mean(log['iterations'])
     log['statistics']['iterations']['sd'] = sd(log['iterations'])
 
-    log['statistics']['fitness']['avg'] = mean(log['avgs'])
-    log['statistics']['fitness']['sd'] = sd(log['maxs'])
+    log['statistics']['avgfitness']['avg'] = mean(log['avgs'])
+    log['statistics']['avgfitness']['sd'] = sd(log['avgs'])
+
+    log['statistics']['maxfitness']['avg'] = mean(log['maxs'])
+    log['statistics']['maxfitness']['sd'] = sd(log['maxs'])
 
     return log
 
@@ -105,33 +112,39 @@ testLogs = map(getLogData, testDirs)
 
 print 'Analysis'
 with open('analysis.csv', 'w') as csvfile:
-    csvfile.write('{0};{1};{2};{3};{4};{5};{6};\n'.format(
+    csvfile.write('{0};{1};{2};{3};{4};{5};{6};{7};{8}\n'.format(
         'strategy',
         'order',
         'convergence',
-        'avg-iterations',
-        'sd-iterations',
-        'avg-fitness',
-        'sd-fitness'
+        'iterations-avg',
+        'iterations-sd',
+        'avgfitness-avg',
+        'avgfitness-sd',
+        'maxfitness-avg',
+        'maxfitness-sd'
     ))
 
     i = 0
     while(i < len(testLogs)):
-        csvfile.write('{0};{1};{2};{3};{4};{5};{6}\n'.format(
+        csvfile.write('{0};{1};{2};{3};{4};{5};{6};{7};{8};\n'.format(
             testLogs[i]['strategy'],
-            str(i),
+            str((i+1)),
             testLogs[i]['statistics']['convergence'],
             testLogs[i]['statistics']['iterations']['avg'],
             testLogs[i]['statistics']['iterations']['sd'],
-            testLogs[i]['statistics']['fitness']['avg'],
-            testLogs[i]['statistics']['fitness']['sd'],
+            testLogs[i]['statistics']['avgfitness']['avg'],
+            testLogs[i]['statistics']['avgfitness']['sd'],
+            testLogs[i]['statistics']['maxfitness']['avg'],
+            testLogs[i]['statistics']['maxfitness']['sd']
         ))
-        print 'Test {0}\n\tConvergence: {1}\n\tIterations\n\t  avg: {2}\n\t  sd: {3}\n\tFitness\n\t  avg: {4}\n\t  sd: {5}'.format(
+        print 'Test {0}\n\tConvergence: {1}\n\tIterations\n\t  avg: {2}\n\t  sd: {3}\n\tAvgFitness\n\t  avg: {4}\n\t  sd: {5}\n\tMaxFitness\n\t  avg: {6}\n\t  sd: {7}'.format(
             testLogs[i]['strategy'],
             testLogs[i]['statistics']['convergence'],
             testLogs[i]['statistics']['iterations']['avg'],
             testLogs[i]['statistics']['iterations']['sd'],
-            testLogs[i]['statistics']['fitness']['avg'],
-            testLogs[i]['statistics']['fitness']['sd'],
+            testLogs[i]['statistics']['avgfitness']['avg'],
+            testLogs[i]['statistics']['avgfitness']['sd'],
+            testLogs[i]['statistics']['maxfitness']['avg'],
+            testLogs[i]['statistics']['maxfitness']['sd']
         )
         i += 1
