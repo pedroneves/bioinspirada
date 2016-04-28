@@ -21,8 +21,8 @@ popcap = 100
 maxage = 5
 initializationfnid = 'randominit'
 fitnessfnid = 'collisionFitness'
-selectionfnid = 'tournament'
-recombinationfnid = 'pmx'
+selectionfnid = 'rank2outof5random'
+recombinationfnid = 'cutAndCrossfill'
 mutationfnid = 'swapMutation'
 survivingfnid = 'replaceWorst'
 stopfnid = 'stop'
@@ -114,11 +114,12 @@ def logger (iters, pop):
 def logDir ():
     return 'log-' + str(initializationfnid) + '-' + str(fitnessfnid) + '-' + str(selectionfnid) + '-' + str(recombinationfnid) + '-' + str(mutationfnid) + '-' + str(survivingfnid) + '-' + 'mit' + str(maxiterations) + '-' + 'mtp' + str(mutprob) + '-' + 'cap' + str(popcap)
 
-def jsonMaxAvgLog (avglog, maxlog):
+def jsonLog (avglog, maxlog):
     data = {}
     data['iterations'] = len(avglog)
     data['avglog'] = avglog
     data['maxlog'] = maxlog
+    data['converged'] = (len(maxlog) == 0 or max(maxlog) == 1)
 
     # Creates a dir to contain the logs of tests for the current execution
     if not os.path.exists(logDir()):
@@ -588,7 +589,7 @@ if run:
             plotMaxAvgLog(avglog, maxlog)
 
         if savingJson:
-            jsonMaxAvgLog(avglog, maxlog)
+            jsonLog(avglog, maxlog)
 
         best = getBestSolution(superiorRace)
         print "Test #{2}: Max fitness {0} and phenotype {1}".format(best['fitness'], gtp(best['genotype']), (test+1))
