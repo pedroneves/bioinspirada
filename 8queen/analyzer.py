@@ -1,6 +1,6 @@
 #
 #
-# This script is responsable to analyze all the test logs and give a comparative
+# This script is responsable for analyzing all the test logs and giving a comparative
 # view of the average iteration and the standard deviation for each test.
 #
 #
