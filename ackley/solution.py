@@ -1,4 +1,6 @@
 import random as rd
+import setup as st
+import ackley as ak
 
 # Represents a individual in Evoluive Strategy for Ackley's function
 class Solution:
@@ -14,20 +16,29 @@ class Solution:
     # Amount of dimensions
     dim = 0
     
-    def __init__(self, dimensions):
-        self.dim = dimensions
-        self.objvar = range(dimensions)
-        self.mutpace = range(dimensions)
-        self.rot = range((dimensions*(dimensions - 1)/2))
+    # Fitness
+    fitness = 0
+    
+    def __init__(self):
+        self.dim = st.dims
+        self.objvar = range(st.dims)
+        self.mutpace = range(st.dims)
+        self.rot = range((st.dims*(st.dims - 1)/2))
         
         i = 0
-        while(i < dimensions):
+        while(i < st.dims):
             self.objvar[i] = rd.uniform(-15,15)
-            self.mutpace[i] = rd.uniform(-15,15)
+            self.mutpace[i] = rd.uniform(-st.mutpacerange, st.mutpacerange)
             i+=1
             
         i = 0
         while(i < len(self.rot)):
             self.rot[i] = rd.uniform(-15,15)
             i+=1
+            
+        self.fitness = ak.ackley(self)
         
+    def __str__ (self):
+        return ("Solution {0} - \n" + str(self.objvar) + "\n" + str(self.mutpace) + "\n" + str(self.rot)).format(self.fitness)
+        
+            
