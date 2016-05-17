@@ -1,3 +1,5 @@
+import numpy as np
+
 # Total amount of individuals
 popcap = 1
 

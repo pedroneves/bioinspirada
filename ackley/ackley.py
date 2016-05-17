@@ -15,4 +15,4 @@ def ackley (solution):
     def fn1 (x):
         return np.cos(c3*x)
     
-    return (-c1*np.exp( -c2*np.sqrt(rt1*( sum(map(sqr,solution.objvar)) )) )) - np.exp(rt1 * sum(map(fn1, solution.objvar))) + c1 + 1
+    return (-c1*np.exp( -c2*np.sqrt(rt1*( sum(map(sqr,solution.objvar)) )) )) - np.exp(rt1 * sum(map(fn1, solution.objvar))) + c1 + np.exp(1)

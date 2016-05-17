@@ -7,7 +7,7 @@ from ackley import ackley
 # a function
 learningRate = 1/np.sqrt(st.dims)
 
-# Mutation correlated with a single standard deviation parameter
+# Mutation non-correlated and with a single standard deviation parameter
 # Although the solutions has the most complete format, in this case, only the first
 # mutation pace is used
 def singleSd (population):
