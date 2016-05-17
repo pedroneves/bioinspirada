@@ -1,7 +1,7 @@
 import setup as st
 import numpy as np
 from solution import Solution
-from ackley import ackley
+from fitness import ackley
 
 # Default learning pace. Fixed at first, based on the problem dimension but may be
 # a function
@@ -42,3 +42,12 @@ def singleSd (population):
         i += 1
 
     return newpop
+
+
+def multipleSd (population):
+    # ToDo
+    return population
+    
+def correlatedSd (population):
+    # ToDo
+    return population
