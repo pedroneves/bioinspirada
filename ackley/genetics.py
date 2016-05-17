@@ -33,7 +33,14 @@ class Genetics:
             if self.preIteration is not None:
                 self.preIteration(self.iterations, self.population)
 
-            self.population = self.surviving(self.population, self.mutation(self.recombination(self.selection(self.population))))
+            # Former genetic standard algorithm
+            # self.population = self.surviving(self.population, self.mutation(self.recombination(self.selection(self.population))))
+            
+            # Evolution Strategy standard
+            # First, mutate all the population
+            self.population = self.mutation(self.population)
+            # Then, mating, recombination and surviving
+            self.population = self.surviving(self.population, self.recombination(self.selection(self.population)))
 
             if self.postIteration is not None:
                 self.postIteration(self.iterations, self.population)
