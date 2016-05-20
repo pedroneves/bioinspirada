@@ -1,8 +1,9 @@
 import random as rd
 import setup as st
 import fitness as ft
+import math
 
-# Represents a individual in Evolutive Strategy for Ackley's function
+# Represents a individual in Evolution Strategy for Ackley's function
 class Solution:
     # Object Variables
     objvar = None
@@ -13,7 +14,7 @@ class Solution:
     # Angle rotations
     rot = None
     
-    # Amount of dimensions
+    # Number of dimensions
     dim = 0
     
     # Fitness
@@ -33,7 +34,11 @@ class Solution:
             
         i = 0
         while(i < len(self.rot)):
-            self.rot[i] = rd.uniform(-15,15)
+            number = rd.uniform(-math.py, math.py)
+            while abs(number) == math.py:
+                number = rd.uniform(-math.py, math.py)
+            
+            self.rot[i] = number
             i+=1
             
         self.fitness = ft.ackley(self)

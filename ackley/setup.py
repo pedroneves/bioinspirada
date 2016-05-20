@@ -12,7 +12,7 @@ mutpacerange = 5
 # Minimum mutation pace
 mutpacemin = 0.1
 
-# Children per couple
+# Children per iteration to population size ratio
 cpc = 7
 
 # Evolution Strategy params

@@ -1,7 +1,18 @@
 import setup as st
 import numpy as np
 
+#def localDiscRecomb(p1, p2):
 
+#def globalDiscRecomb(population):
+
+#def localInterpRecomb(p1, p2, childAvegare=False):
+
+#def globalInterpRecomb(population, childAverage=False):
+
+#localHibridRecomb(p1, p2, childAverage=False):
+
+# Recommended recombination strategy, according to the book
+#globalHibridRecomb(population, childAverage=False):
 
 def recombIntermitante(p1, p2):
 	return (p1 + p2)/2.0
