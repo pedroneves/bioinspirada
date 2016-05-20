@@ -1,8 +1,8 @@
 import random as rd
 import setup as st
-import ackley as ak
+import fitness as ft
 
-# Represents a individual in Evoluive Strategy for Ackley's function
+# Represents a individual in Evolutive Strategy for Ackley's function
 class Solution:
     # Object Variables
     objvar = None
@@ -36,7 +36,7 @@ class Solution:
             self.rot[i] = rd.uniform(-15,15)
             i+=1
             
-        self.fitness = ak.ackley(self)
+        self.fitness = ft.ackley(self)
         
     def __str__ (self):
         return ("Solution {0} - \n" + str(self.objvar) + "\n" + str(self.mutpace) + "\n" + str(self.rot)).format(self.fitness)
