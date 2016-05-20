@@ -12,8 +12,8 @@ mutpacerange = 5
 # Minimum mutation pace
 mutpacemin = 0.1
 
-# Children per parent
-cpp = 7
+# Children per couple
+cpc = 7
 
 # Evolution Strategy params
 mutationfn = "singleSd"

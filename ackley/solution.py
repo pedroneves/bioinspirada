@@ -28,7 +28,7 @@ class Solution:
         i = 0
         while(i < st.dims):
             self.objvar[i] = rd.uniform(-15,15)
-            self.mutpace[i] = rd.uniform(-st.mutpacerange, st.mutpacerange)
+            self.mutpace[i] = rd.uniform(0, st.mutpacerange)
             i+=1
             
         i = 0
