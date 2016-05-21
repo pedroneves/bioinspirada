@@ -2,6 +2,7 @@ import setup as st
 import numpy as np
 from solution import Solution
 from random import random, randint
+from math import pi
 
 # =============================================================================
 # ============================= UTILITY FUNCTIONS =============================
@@ -45,6 +46,11 @@ def _chooseListsFromPop(population, getAttrFn):
 
     return list1, list2
 
+
+def _angleCorrection(angle):
+    if abs(angle) > pi:
+        return angle - 2*pi*np.sign(angle)
+    return angle
 # =============================================================================
 # ========================== RECOMBINATION FUNCTIONS ==========================
 # =============================================================================
@@ -69,6 +75,19 @@ def globalDiscRecomb(population):
     return Solution(objvar=childObjvar, mutpace=childMutpace, rot=childRot)
 
 
+def localInterpRecomb(p1, p2):
+    alpha = 0.5 if st.childAverage else random()
+
+    childObjvar = _interpListRecomb(p1.objvar, p2.objvar, alpha)
+    childMutpace = _interpListRecomb(p1.mutpace, p2.mutpace, alpha)
+    childRot = _interpListRecomb(p1.rot, p2.rot, alpha)
+
+    # Corrects any possibly out of range values of rot
+    childRot = map(_angleCorrection, childRot)
+
+    return Solution(objvar=childObjvar, mutpace=childMutpace, rot=childRot)
+
+
 def globalInterpRecomb(population):
     objvarLists = _chooseListsFromPop(population, (lambda x: x.objvar))
     mutpaceLists = _chooseListsFromPop(population, (lambda x: x.mutpace))
@@ -80,15 +99,8 @@ def globalInterpRecomb(population):
     childMutpace = _interpListRecomb(mutpaceLists[0], mutpaceLists[1], alpha)
     childRot = _interpListRecomb(rotLists[0], rotLists[1], alpha)
 
-    return Solution(objvar=childObjvar, mutpace=childMutpace, rot=childRot)
-
-        
-def localInterpRecomb(p1, p2):
-    alpha = 0.5 if st.childAverage else random()
-
-    childObjvar = _interpListRecomb(p1.objvar, p2.objvar, alpha)
-    childMutpace = _interpListRecomb(p1.mutpace, p2.mutpace, alpha)
-    childRot = _interpListRecomb(p1.rot, p2.rot, alpha)
+    # Corrects any possibly out of range values of rot
+    childRot = map(_angleCorrection, childRot)
 
     return Solution(objvar=childObjvar, mutpace=childMutpace, rot=childRot)
 
@@ -101,6 +113,9 @@ def localHibridRecomb(p1, p2):
     alpha = 0.5 if st.childAverage else random()
     childMutpace = _interpListRecomb(p1.mutpace, p2.mutpace, alpha)
     childRot = _interpListRecomb(p1.rot, p2.rot, alpha)
+
+    # Corrects any possibly out of range values of rot
+    childRot = map(_angleCorrection, childRot)
 
     return Solution(objvar=childObjvar, mutpace=childMutpace, rot=childRot)
 
@@ -118,5 +133,8 @@ def globalHibridRecomb(population):
     alpha = 0.5 if st.childAverage else random()
     childMutpace = _interpListRecomb(mutpaceLists[0], mutpaceLists[1], alpha)
     childRot = _interpListRecomb(rotLists[0], rotLists[1], alpha)
+
+    # Corrects any possibly out of range values of rot
+    childRot = map(_angleCorrection, childRot)
 
     return Solution(objvar=childObjvar, mutpace=childMutpace, rot=childRot)

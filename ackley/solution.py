@@ -38,7 +38,7 @@ class Solution:
             i = 0
             while(i < len(self.rot)):
                 number = rd.uniform(-math.pi, math.pi)
-                while abs(number) == math.pi:
+                while number < -math.pi || number > math.pi:
                     number = rd.uniform(-math.py, math.py)
                 
                 self.rot[i] = number
