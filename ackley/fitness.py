@@ -2,12 +2,12 @@ import numpy as np
 from deap import benchmarks
 
 # Third party implementation. Ackley params cannot be changed
-def ackley (lst):
-	return benchmarks.ackley(lst)[0]
+def ackley (coord):
+	return benchmarks.ackley(coord)[0]
 	
 
 # Team's ackley implementation. 
-def ackley2 (solution):
+def ackley2 (coord):
     
     # ACKLEY PARAMS
     c1 = 20
@@ -23,5 +23,5 @@ def ackley2 (solution):
     
     # On the project description, the last term is
     # is defined as '1' instead of 'exp(1)'. However, with some research, the last
-    # one is the correct one. The 'exp(1)' is the correct on
-    return (-c1*np.exp( -c2*np.sqrt(rt1*( sum(map(sqr,solution.objvar)) )) )) - np.exp(rt1 * sum(map(fn1, solution.objvar))) + c1 + np.exp(1)
+    # one is the correct one. The 'exp(1)' is the correct one
+    return (-c1*np.exp( -c2*np.sqrt(rt1*( sum(map(sqr,coord)) )) )) - np.exp(rt1 * sum(map(fn1, coord))) + c1 + np.exp(1)

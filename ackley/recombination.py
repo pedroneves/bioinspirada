@@ -1,7 +1,7 @@
 import setup as st
 import numpy as np
 from solution import Solution
-from random import random
+from random import random, randint
 
 # =============================================================================
 # ============================= UTILITY FUNCTIONS =============================
@@ -38,8 +38,8 @@ def _chooseListsFromPop(population, getAttrFn):
             rand2 = randint(0, len(population)-1)
 
         # Add attributes
-        attr1 = getAttrFn(population[rand1])
-        attr2 = getAttrFn(population[rand2])
+        attr1 = getAttrFn(population[rand1])[i]
+        attr2 = getAttrFn(population[rand2])[i]
         list1.append(attr1)
         list2.append(attr2)
 

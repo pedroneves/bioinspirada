@@ -37,15 +37,17 @@ class Solution:
         if rot == None:
             i = 0
             while(i < len(self.rot)):
-                number = rd.uniform(-math.py, math.py)
-                while abs(number) == math.py:
+                number = rd.uniform(-math.pi, math.pi)
+                while abs(number) == math.pi:
                     number = rd.uniform(-math.py, math.py)
                 
                 self.rot[i] = number
                 i+=1
             
-        self.fitness = ft.ackley(self)
-        
+        self.fitness = ft.ackley(self.objvar)
+
+
+
     def __str__ (self):
         return ("Solution {0} - \n" + str(self.objvar) + "\n" + str(self.mutpace) + "\n" + str(self.rot)).format(self.fitness)
         
