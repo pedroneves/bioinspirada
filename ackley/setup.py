@@ -1,7 +1,7 @@
 import numpy as np
 
 # Total amount of individuals
-popcap = 60
+popcap = 30
 
 # Specifies the solution's dimension
 dims = 30
@@ -23,3 +23,7 @@ recombinationFn = "hibridRecomb"
 # Parameter for recombinations that interpolate the parents. True means the
 # child is the average
 childAverage = True
+
+# Specification of which survival selection approach to follow: generational or
+# non-generational
+generational = True

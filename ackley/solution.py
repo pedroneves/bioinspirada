@@ -43,8 +43,9 @@ class Solution:
                 
                 self.rot[i] = number
                 i+=1
-            
-        self.fitness = ft.ackley(self.objvar)
+        
+        # Negative since we want to maximize the fitness
+        self.fitness = -ft.ackley(self.objvar)
 
 
 
