@@ -16,7 +16,9 @@ mutpacemin = 0.1
 cpc = 7
 
 # Evolution Strategy params
-mutationfn = "singleSd"
+mutationFn = "singleSd"
+parentSelectionFn = "globalUniformSelection"
+recombinationFn = "hibridRecomb"
 
 # Parameter for recombinations that interpolate the parents. True means the
 # child is the average
