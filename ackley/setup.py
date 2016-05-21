@@ -17,3 +17,7 @@ cpc = 7
 
 # Evolution Strategy params
 mutationfn = "singleSd"
+
+# Parameter for recombinations that interpolate the parents. True means the
+# child is the average
+childAverage = False

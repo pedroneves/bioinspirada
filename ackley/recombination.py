@@ -3,7 +3,9 @@ import numpy as np
 from solution import Solution
 from random import random
 
-childAsAverage = False
+# =============================================================================
+# ============================= UTILITY FUNCTIONS =============================
+# =============================================================================
 
 def _discListRecomb(list1, list2):
     result = list()
@@ -13,6 +15,7 @@ def _discListRecomb(list1, list2):
     
     return result
 
+
 def _interpListRecomb(list1, list2, alpha):
     result = list()
 
@@ -20,6 +23,7 @@ def _interpListRecomb(list1, list2, alpha):
         result.append(alpha*list1[i] + (1-alpha)*list2[i])
 
     return result
+
 
 def _chooseListsFromPop(population, getAttrFn):
     list1 = list()
@@ -41,6 +45,9 @@ def _chooseListsFromPop(population, getAttrFn):
 
     return list1, list2
 
+# =============================================================================
+# ========================== RECOMBINATION FUNCTIONS ==========================
+# =============================================================================
 
 def localDiscRecomb(p1, p2):
     childObjvar = _discListRecomb(p1.objvar, p2.objvar)
@@ -50,33 +57,66 @@ def localDiscRecomb(p1, p2):
     return Solution(objvar=childObjvar, mutpace=childMutpace, rot=childRot)
 
 
-
-def globalInterpRecomb(population, childAverage=False):
+def globalDiscRecomb(population):
     objvarLists = _chooseListsFromPop(population, (lambda x: x.objvar))
     mutpaceLists = _chooseListsFromPop(population, (lambda x: x.mutpace))
     rotLists = _chooseListsFromPop(population, (lambda x: x.rot))
 
-    alpha = 0.5 if childAsAverage else random()
+    childObjvar = _discListRecomb(objvarLists[0], objvarLists[1])
+    childMutpace = _discListRecomb(mutpaceLists[0], mutpaceLists[1])
+    childRot = _discListRecomb(rotLists[0], rotLists[1])
+
+    return Solution(objvar=childObjvar, mutpace=childMutpace, rot=childRot)
+
+
+def globalInterpRecomb(population):
+    objvarLists = _chooseListsFromPop(population, (lambda x: x.objvar))
+    mutpaceLists = _chooseListsFromPop(population, (lambda x: x.mutpace))
+    rotLists = _chooseListsFromPop(population, (lambda x: x.rot))
+
+    alpha = 0.5 if st.childAverage else random()
     
     childObjvar = _interpListRecomb(objvarLists[0], objvarLists[1], alpha)
     childMutpace = _interpListRecomb(mutpaceLists[0], mutpaceLists[1], alpha)
     childRot = _interpListRecomb(rotLists[0], rotLists[1], alpha)
 
     return Solution(objvar=childObjvar, mutpace=childMutpace, rot=childRot)
+
         
-#def globalDiscRecomb(population):
+def localInterpRecomb(p1, p2):
+    alpha = 0.5 if st.childAverage else random()
 
-#def localInterpRecomb(p1, p2, childAvegare=False):
+    childObjvar = _interpListRecomb(p1.objvar, p2.objvar, alpha)
+    childMutpace = _interpListRecomb(p1.mutpace, p2.mutpace, alpha)
+    childRot = _interpListRecomb(p1.rot, p2.rot, alpha)
 
-#localHibridRecomb(p1, p2, childAverage=False):
+    return Solution(objvar=childObjvar, mutpace=childMutpace, rot=childRot)
+
+
+def localHibridRecomb(p1, p2):
+    # Discrete recombination of the object values
+    childObjvar = _discListRecomb(p1.objvar, p2.objvar)
+
+    # Interpolating recombination of the strategy parameters
+    alpha = 0.5 if st.childAverage else random()
+    childMutpace = _interpListRecomb(p1.mutpace, p2.mutpace, alpha)
+    childRot = _interpListRecomb(p1.rot, p2.rot, alpha)
+
+    return Solution(objvar=childObjvar, mutpace=childMutpace, rot=childRot)
+
 
 # Recommended recombination strategy, according to the book
-#globalHibridRecomb(population, childAverage=False):
+def globalHibridRecomb(population):
+    objvarLists = _chooseListsFromPop(population, (lambda x: x.objvar))
+    mutpaceLists = _chooseListsFromPop(population, (lambda x: x.mutpace))
+    rotLists = _chooseListsFromPop(population, (lambda x: x.rot))
 
-def recombIntermitante(p1, p2):
-	return (p1 + p2)/2.0
+    # Discrete recombination of the object values
+    childObjvar = _discListRecomb(objvarLists[0], objvarLists[1])
 
-def recombDiscret(p1, p2):
-	mask = np.random.rand(p1.shape[0]) > 0.5
-	return np.vectorize(lambda p1, p2, c: p1 if c else p2)(p1,p2,mask)
+    # Interpolating recombination of the strategy parameters
+    alpha = 0.5 if st.childAverage else random()
+    childMutpace = _interpListRecomb(mutpaceLists[0], mutpaceLists[1], alpha)
+    childRot = _interpListRecomb(rotLists[0], rotLists[1], alpha)
 
+    return Solution(objvar=childObjvar, mutpace=childMutpace, rot=childRot)
