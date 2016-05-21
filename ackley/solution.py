@@ -11,7 +11,7 @@ class Solution:
     # Mutation paces
     mutpace = None
     
-    # Angle rotations
+    # Angle rotations (alpha values)
     rot = None
     
     # Number of dimensions
@@ -20,26 +20,29 @@ class Solution:
     # Fitness
     fitness = 0
     
-    def __init__(self):
+    def __init__(self, objvar=None, mutpace=None, rot=None):
         self.dim = st.dims
-        self.objvar = range(st.dims)
-        self.mutpace = range(st.dims)
-        self.rot = range((st.dims*(st.dims - 1)/2))
+        self.objvar = range(st.dims) if objvar == None else objvar
+        self.mutpace = range(st.dims) if mutpace == None else mutpace
+        self.rot = range((st.dims*(st.dims - 1)/2)) if rot == None else rot
         
         i = 0
         while(i < st.dims):
-            self.objvar[i] = rd.uniform(-15,15)
-            self.mutpace[i] = rd.uniform(0, st.mutpacerange)
+            if objvar == None:
+                self.objvar[i] = rd.uniform(-15,15)
+            if mutpace == None:
+                self.mutpace[i] = rd.uniform(0, st.mutpacerange)
             i+=1
-            
-        i = 0
-        while(i < len(self.rot)):
-            number = rd.uniform(-math.py, math.py)
-            while abs(number) == math.py:
+        
+        if rot == None:
+            i = 0
+            while(i < len(self.rot)):
                 number = rd.uniform(-math.py, math.py)
-            
-            self.rot[i] = number
-            i+=1
+                while abs(number) == math.py:
+                    number = rd.uniform(-math.py, math.py)
+                
+                self.rot[i] = number
+                i+=1
             
         self.fitness = ft.ackley(self)
         
