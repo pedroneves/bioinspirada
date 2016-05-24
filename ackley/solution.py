@@ -45,7 +45,7 @@ class Solution:
                 i+=1
         
         # Negative since we want to maximize the fitness
-        self.fitness = -ft.ackley2(self.objvar)
+        self.fitness = -ft.ackley(self.objvar)
 
 
 

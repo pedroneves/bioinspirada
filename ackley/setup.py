@@ -20,8 +20,8 @@ childrenRatio = 7
 
 # Evolution Strategy params
 mutationFn = "singleSd"
-parentSelectionFn = "globalUniformSelection"
-recombinationFn = "hibridRecomb"
+parentSelectionFn = "localUniformSelection"
+recombinationFn = "interpolationRecomb"
 
 # Parameter for recombinations that interpolate the parents. True means the
 # child is the average

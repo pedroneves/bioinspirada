@@ -11,7 +11,7 @@ parentSelectionfn = getattr(sys.modules['parent_selection'], st.parentSelectionF
 recombfn = getattr(sys.modules['recombination'], st.recombinationFn)
 mutationfn = getattr(sys.modules['mutation'], st.mutationFn)
 
-nMutationTrials = 1
+nMutationTrials = 5
 
 def iteration (population):
     

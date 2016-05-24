@@ -66,7 +66,7 @@ def singleSd (individual):
         
     # Updating remaining vars
     individual.objvar = map(objVarMutation, individual.objvar)
-    individual.fitness = ackley(individual.objvar)
+    individual.fitness = -ackley(individual.objvar)
     
     return individual
 
@@ -85,6 +85,8 @@ def multipleSd (individual):
     # --- Mutate object variables ---
     for i in range(0, st.dims):
         individual.objvar[i] += individual.mutpace[i] * np.random.normal(0, 1)
+
+    individual.fitness = -ackley(individual.objvar)
 
     return individual
 
