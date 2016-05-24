@@ -6,6 +6,9 @@ popcap = 30
 # Specifies the solution's dimension
 dims = 30
 
+# Maximum number of iterations
+maxIterations = 200000
+
 # Max mutation pace range for initialization
 mutpacerange = 5
 

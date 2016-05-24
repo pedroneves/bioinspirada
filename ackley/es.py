@@ -30,6 +30,21 @@ def iteration (population):
 
     return population
 
+def mainLoop (population):
+    itNum = 0
+    while itNum < st.maxIterations:
+        population = iteration(population)
+        if population[0].fitness == 0:
+            print "Solution found!"
+            break
+        else:
+            print population[0].fitness
+        itNum += 1
+
+    if itNum == st.maxIterations:
+        print ("Maximum number of iterations reached. Best fitness found was " +
+            str(population[0].fitness))
+
 
 def init ():
     pop = []
@@ -38,4 +53,4 @@ def init ():
         pop.append(Solution())
         i += 1
         
-    return pop
+    mainLoop(population)
