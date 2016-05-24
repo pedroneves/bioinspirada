@@ -6,6 +6,8 @@ import survivor_selection as ss
 from solution import Solution
 from copy import deepcopy
 import sys
+import matplotlib.pyplot as plt
+import numpy as np
 
 parentSelectionfn = getattr(sys.modules['parent_selection'], st.parentSelectionFn)
 recombfn = getattr(sys.modules['recombination'], st.recombinationFn)
@@ -37,6 +39,9 @@ def iteration (population):
 
 def mainLoop (population):
     itNum = 0
+    done = False
+    maxFit = []
+    meanFit = []
     while itNum < st.maxIterations:
         population = iteration(population)
         if population[0].fitness == 0:
@@ -44,15 +49,34 @@ def mainLoop (population):
             break
         #else:
             #print population[0].fitness
-        
+        currentFit = [x.fitness for x in population]
+        maxFit.append(max(currentFit))
+        meanFit.append(np.mean(currentFit))
+
         if itNum % 10 == 0:
-            print str(itNum) + '   ' + str(map(lambda x: x.fitness, population))
+            print str(itNum) + '   ' + str(currentFit[0])
         itNum += 1
+
+        if(population[0].fitness > -st.mutpacemin*10):
+            break
 
     if itNum == st.maxIterations:
         print ("Maximum number of iterations reached. Best fitness found was " +
-            str(population[0].fitness))
+            str(population[0].fitness))		
 
+    print 'maxFit'
+    print '\n'.join(map(str,maxFit[::20]))
+
+    print 'meanFit'
+    print '\n'.join(map(str,meanFit[::20]))
+
+    plt.title('Ackley function')
+    plt.plot(maxFit, label = 'Max Fit')
+    plt.plot(meanFit, label = 'Mean Fit')
+    plt.ylabel('Fitness')
+    plt.xlabel('Interations')
+    plt.legend(loc='best',shadow=True)
+    plt.show()    
 
 def init ():
     pop = []

@@ -13,7 +13,7 @@ maxIterations = 200000
 mutpacerange = 5
 
 # Minimum mutation pace
-mutpacemin = 0.001
+mutpacemin = 0.000001
 
 # Desired ammount of children generated per iteration is childrenRatio * popcap
 childrenRatio = 7
