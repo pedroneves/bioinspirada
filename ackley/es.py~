@@ -62,5 +62,3 @@ def init ():
         i += 1
         
     mainLoop(pop)
-
-init()
