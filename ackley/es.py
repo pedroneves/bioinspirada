@@ -5,8 +5,13 @@ import mutation as mut
 import survivor_selection as ss
 from solution import Solution
 from copy import deepcopy
+import sys
 
-nMutationTrials = 10
+parentSelectionfn = getattr(sys.modules['parent_selection'], st.parentSelectionFn)
+recombfn = getattr(sys.modules['recombination'], st.recombinationFn)
+mutationfn = getattr(sys.modules['mutation'], st.mutationFn)
+
+nMutationTrials = 1
 
 def iteration (population):
     
@@ -15,13 +20,13 @@ def iteration (population):
     # Generate st.childrenRation*len(population) children
     while len(children) < st.childrenRatio*len(population):
         # Select parents
-        parents = ps.localUniformSelection(population)
+        parents = parentSelectionfn(population)
         # Generate a child
-        child = rcb.interpolationRecomb(parents[0], parents[1])
+        child = recombfn(parents[0], parents[1])
         # Generate nMutationTrials mutated versions of the child
         trials = list()
         for i in range(0, nMutationTrials):
-            trials.append(mut.multipleSd(child))
+            trials.append(mutationfn(child))
         # Add the most fit mutation to the children list
         bestMutation = max(trials, key=(lambda x: x.fitness))
         children.append(bestMutation)
