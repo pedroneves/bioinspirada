@@ -3,6 +3,7 @@ import numpy as np
 from solution import Solution
 from fitness import ackley
 from math import pi, tan
+from copy import deepcopy
 
 # Default learning paces. Fixed at first, based on the problem dimension but may be
 # functions
@@ -50,6 +51,8 @@ beta = pi/36
 
 
 def singleSd (individual):
+    individual = deepcopy(individual)
+
     # Updates the first mutation pace
     individual.mutpace[0] *= np.exp(lrSingleSd * np.random.normal(0, 1))
         
@@ -68,6 +71,8 @@ def singleSd (individual):
     return individual
 
 def multipleSd (individual):
+    individual = deepcopy(individual)
+
     # --- Mutate standard deviations ---
     common = lrMultipleSd2 * np.random.normal(0, 1)
     # Mutate one standard deviation
@@ -85,6 +90,8 @@ def multipleSd (individual):
 
 # Unfinished   
 #def correlatedSd (individual):
+#    individual = deepcopy(individual)
+#
 #    # --- Mutate standard deviations ---
 #    common = lrMultipleSd2 * np.random.normal(0, 1)
 #    # Mutate one standard deviation

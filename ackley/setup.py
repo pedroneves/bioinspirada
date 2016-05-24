@@ -12,8 +12,8 @@ mutpacerange = 5
 # Minimum mutation pace
 mutpacemin = 0.1
 
-# Children per iteration to population size ratio
-cpc = 7
+# Desired ammount of children generated per iteration is childrenRatio * popcap
+childrenRatio = 7
 
 # Evolution Strategy params
 mutationFn = "singleSd"
