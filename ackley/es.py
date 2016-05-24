@@ -17,7 +17,7 @@ def iteration (population):
         # Select parents
         parents = ps.localUniformSelection(population)
         # Generate a child
-        child = rcb.hibridRecomb(parents[0], parents[1])
+        child = rcb.interpolationRecomb(parents[0], parents[1])
         # Generate nMutationTrials mutated versions of the child
         trials = list()
         for i in range(0, nMutationTrials):
