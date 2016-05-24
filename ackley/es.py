@@ -45,8 +45,8 @@ def mainLoop (population):
         #else:
             #print population[0].fitness
         
-        #if itNum % 1000 == 0:
-        print str(itNum) + '   ' + str(map(lambda x: x.fitness, population))
+        if itNum % 10 == 0:
+            print str(itNum) + '   ' + str(map(lambda x: x.fitness, population))
         itNum += 1
 
     if itNum == st.maxIterations:
@@ -60,5 +60,4 @@ def init ():
     while i < st.popcap:
         pop.append(Solution())
         i += 1
-        
     mainLoop(pop)

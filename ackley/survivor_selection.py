@@ -8,6 +8,6 @@ def survivorSelection(population, children):
     if st.generational:
         candidates = children+bestFromPop() if st.generationalElitist else children
     else:
-        population+children
+        candidates = population+children
 
     return sorted(candidates, reverse=True, key=lambda x: x.fitness)[:st.popcap]
