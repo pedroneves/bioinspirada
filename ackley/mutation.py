@@ -57,8 +57,8 @@ def singleSd (individual):
     individual.mutpace[0] *= np.exp(lrSingleSd * np.random.normal(0, 1))
         
     # Checking if the mutation pace is lower then the threshold
-    if newSolution.mutpace[0] < st.mutpacemin:
-        newSolution.mutpace[0] = st.mutpacemin
+    if individual.mutpace[0] < st.mutpacemin:
+        individual.mutpace[0] = st.mutpacemin
             
     # Mapping fn to update all objective variables
     def objVarMutation (x):
@@ -66,7 +66,7 @@ def singleSd (individual):
         
     # Updating remaining vars
     individual.objvar = map(objVarMutation, individual.objvar)
-    individual.fitness = ackley(individual)
+    individual.fitness = ackley(individual.objvar)
     
     return individual
 
