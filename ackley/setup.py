@@ -29,4 +29,4 @@ childAverage = True
 
 # Specification of which survival selection approach to follow: generational or
 # non-generational
-generational = True
+generational = False

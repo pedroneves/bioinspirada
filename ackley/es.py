@@ -6,16 +6,16 @@ import survivor_selection as ss
 from solution import Solution
 from copy import deepcopy
 
-nMutationTrials = 1
+nMutationTrials = 10
 
 def iteration (population):
     
     children = list()
     
     # Generate st.childrenRation*len(population) children
-    while len(children) < st.childrenRatio:
+    while len(children) < st.childrenRatio*len(population):
         # Select parents
-        parents = ps.globalUniformSelection(population)
+        parents = ps.localUniformSelection(population)
         # Generate a child
         child = rcb.hibridRecomb(parents[0], parents[1])
         # Generate nMutationTrials mutated versions of the child
@@ -37,8 +37,11 @@ def mainLoop (population):
         if population[0].fitness == 0:
             print "Solution found!"
             break
-        else:
-            print population[0].fitness
+        #else:
+            #print population[0].fitness
+        
+        #if itNum % 1000 == 0:
+        print str(itNum) + '   ' + str(map(lambda x: x.fitness, population))
         itNum += 1
 
     if itNum == st.maxIterations:
@@ -53,4 +56,4 @@ def init ():
         pop.append(Solution())
         i += 1
         
-    mainLoop(population)
+    mainLoop(pop)

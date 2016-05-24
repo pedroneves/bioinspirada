@@ -77,7 +77,7 @@ def multipleSd (individual):
     common = lrMultipleSd2 * np.random.normal(0, 1)
     # Mutate one standard deviation
     def mutateOneSd (sd):
-        new_sd = sd * np.exp(common + lrSingleSd1*np.random.normal(0, 1))
+        new_sd = sd * np.exp(common + lrMultipleSd1*np.random.normal(0, 1))
         return max(st.mutpacemin, new_sd)
     
     individual.mutpace = map(mutateOneSd, individual.mutpace)
