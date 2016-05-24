@@ -39,7 +39,7 @@ class Solution:
             while(i < len(self.rot)):
                 number = rd.uniform(-math.pi, math.pi)
                 while number < -math.pi or number > math.pi:
-                    number = rd.uniform(-math.py, math.py)
+                    number = rd.uniform(-math.pi, math.pi)
                 
                 self.rot[i] = number
                 i+=1

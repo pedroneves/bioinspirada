@@ -25,8 +25,9 @@ recombinationFn = "hibridRecomb"
 
 # Parameter for recombinations that interpolate the parents. True means the
 # child is the average
-childAverage = False
+childAverage = True
 
 # Specification of which survival selection approach to follow: generational or
 # non-generational
-generational = False
+generational = True
+generationalElitist = True

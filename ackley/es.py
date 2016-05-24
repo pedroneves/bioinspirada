@@ -6,7 +6,7 @@ import survivor_selection as ss
 from solution import Solution
 from copy import deepcopy
 
-nMutationTrials = 10
+nMutationTrials = 5
 
 def iteration (population):
     
@@ -17,7 +17,7 @@ def iteration (population):
         # Select parents
         parents = ps.localUniformSelection(population)
         # Generate a child
-        child = rcb.interpolationRecomb(parents[0], parents[1])
+        child = rcb.hibridRecomb(parents[0], parents[1])
         # Generate nMutationTrials mutated versions of the child
         trials = list()
         for i in range(0, nMutationTrials):
