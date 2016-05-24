@@ -39,7 +39,7 @@ def mainLoop (population):
     itNum = 0
     while itNum < st.maxIterations:
         population = iteration(population)
-        if population[0].fitness == 0:
+        if (population[0].fitness > -10*st.mutpacemin):
             print "Solution found!"
             break
         #else:
