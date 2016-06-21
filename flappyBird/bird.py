@@ -32,13 +32,9 @@ class Bird(pg.sprite.Sprite):
 			self.jump += sp.GRAVITY/6
 		elif(self.jump < sp.GRAVITY*2):
 			self.jump += sp.GRAVITY/40
-        #if self.msec_to_climb > 0:
-        #    frac_climb_done = 1 - self.msec_to_climb/Bird.CLIMB_DURATION
-        #    self.y -= (Bird.CLIMB_SPEED * frames_to_msec(delta_frames) *
-        #               (1 - math.cos(frac_climb_done * math.pi)))
-        #    self.msec_to_climb -= frames_to_msec(delta_frames)
-        #else:
-        #    self.y += Bird.SINK_SPEED * frames_to_msec(delta_frames)
+
+	def colides(self):
+		return self.y <= 0 or self.y + Bird.WIDTH >= sp.WIN_HEIGHT
 
 
 	@property
@@ -51,8 +47,7 @@ class Bird(pg.sprite.Sprite):
 		else:
 			img = self._img_wingdown 
 
-		angle = (float(self.jump)/sp.GRAVITY)*-45
-
+		angle = (float(self.jump)/sp.GRAVITY)*-30
 		return pg.transform.rotate(img, angle)
 
 	@property
