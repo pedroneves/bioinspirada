@@ -3,3 +3,4 @@ tests.py
 8queen/plot*/
 8queen/log*/
 *.csv
+flappyBird/venv/
