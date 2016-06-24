@@ -1,15 +1,21 @@
-from individual import Individual
 from math import tanh as activation
 from setup import (NUM_INPUTS as ninputs, 
                    HIDDEN_LAYERS as hl, 
                    NODES_PER_LAYER as npl)
 
+NUM_WEIGHTS = ( (hl-1)*npl*npl      # Connections between hidden layers
+                + hl*npl            # Biases
+                + ninputs*npl       # Connections between inputs and fst hidden layer
+                + npl               # Connections between last hidden layer and output layer
+                + 1 )               # Output layer node's bias
+
 class Neural_Network:
-    # TODO
     def __init__(self, weights):
+        if npl <= 0 or hl < 1:
+            raise Exception("Neural Network settings not supported")
+
         self.weights = weights
 
-    # TODO
     def feedforward(self, inputs):
         if len(values) != ninputs:
             raise Exception("Incorrect number of neural network inputs")

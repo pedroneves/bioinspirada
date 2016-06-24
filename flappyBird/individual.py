@@ -1,59 +1,46 @@
+import neural_network
 from math import pi
 from random import uniform
-from setup import (NUM_INPUTS as ninputs, 
-                   HIDDEN_LAYERS as hl, 
-                   NODES_PER_LAYER as npl)
+from setup import SIGMA_MIN, SIGMA_MAX, MUTATION_TYPE
 
 class Individual:
     def __init__(self, objvars=None, sigmas=None, alphas=None):
-        # ===============================================
-        # === Number of weights in the neural network ===
-        # ===============================================
-        if npl <= 0 or hp < 1:
-            raise Exception("Neural Network settings not supported")
-
-        self.dims = 0
-        self.dims += (hl-1)*npl*npl     # Connections between hidden layers
-        self.dims += hl*npl             # Biases
-        self.dims += ninputs*npl        # Connections between inputs and fst hidden layer
-        self.dims += npl                # Connections between last hidden layer and output layer
-        self.dims += 1                  # Output layer node's bias
-        # -----------------------------------------------
+        self.dims = neural_network.NUM_WEIGHTS
         
-        # =================================
-        # === Individual Initialization ===
-        # =================================
         # Object variables initialization
         if objvars == None:
-            self.objvars = random_list(self.dims)
+            self.objvars = self.random_list(self.dims)
         else:
             self.objvars = objvars
 
         # Mutation paces initialization
+        if MUTATION_TYPE == 1:
+            self.sigmas = list()
+            self.sigmas.append(uniform(SIGMA_MIN, SIGMA_MAX))
         if sigmas == None:
-            self.sigmas = random_list(self.dims, SIGMA_MIN, SIGMA_MAX)
+            self.sigmas = self.random_list(self.dims, SIGMA_MIN, SIGMA_MAX)
         else:
             self.sigmas = sigmas
 
         # Rotation angles initialization
-        if alphas == None:
-            self.alphas = random_list(dims*(dims-1)/2, -pi, pi)
+        if MUTATION_TYPE != 2:
+            self.alphas = list()
+        elif alphas == None:
+            self.alphas = self.random_list(self.dims*(self.dims-1)/2, -pi, pi)
         else:
             self.alphas = alphas
-        # ---------------------------------
         
         # Plays the game to compute fitness
-        self.fitness = play_game()
+        self.compute_fitness();
 
-
-    def random_list(size, minval=-1, maxval=1):
-        list = list()
+    def random_list(self, size, minval=-1, maxval=1):
+        list_ = list()
         
-        while len(list) < length:
-            list.append(uniform(minval, maxval))
+        while len(list_) < size:
+            list_.append(uniform(minval, maxval))
 
-        return list
+        return list_
 
     # TODO
-    def play_game():
+    def compute_fitness(self):
         return
