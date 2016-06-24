@@ -17,10 +17,10 @@ class Neural_Network:
         self.weights = weights
 
     def feedforward(self, inputs):
-        if len(values) != ninputs:
+        if len(inputs) != ninputs:
             raise Exception("Incorrect number of neural network inputs")
 
-        return rec_feedforward(inputs, 1, 0)
+        return self.rec_feedforward(inputs, 1, 0)
 
     def rec_feedforward(self, past, layer, weight_idx):
         if layer == 2+hl:
@@ -31,19 +31,21 @@ class Neural_Network:
         present = list()
         
         node = 0
-        while node < npl:
+        while node < total_nodes:
             sum_ = 0
             
             # Multiply weights and past
             for val in past:
-                sum_ += weights[weight_idx] * val
+                sum_ += self.weights[weight_idx] * val
                 weight_idx += 1
             
             # Add bias
-            sum_ += weights[weight_idx]
+            sum_ += self.weights[weight_idx]
             weight_idx += 1
 
             # Add output to present
             present.append(activation(sum_))
+            # Increase counter
+            node += 1
 
-        rec_feedforward(present, layer+1, weight_idx)
+        return self.rec_feedforward(present, layer+1, weight_idx)
