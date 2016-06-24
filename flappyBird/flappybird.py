@@ -16,7 +16,7 @@ def main():
         display_surface = pg.display.set_mode((sp.WIN_WIDTH, sp.WIN_HEIGHT))
         pg.display.set_caption('Pygame Flappy Bird')
 
-        images = utils.load_images()    
+        images = utils.load_images()
         score_font = pg.font.SysFont(None, 32, bold=True)  # default font
 
         bird = Bird(50, int(sp.WIN_HEIGHT/2 - Bird.HEIGHT/2), sp.BIRD_ANIMATE,
@@ -36,7 +36,7 @@ def main():
                 clock += 1
                 if clock % 100 == 0:
                         pipes.append(Pipe(images['pipe-end'], images['pipe-body']))
-		
+
 
         # Handle this 'manually'.  If we used pygame.time.set_timer(),
         # pipe addition would be messed up when paused.
@@ -55,7 +55,7 @@ def main():
                                 sp.SLEEP_TIME -= 5
                         elif e.type == KEYUP and e.key == K_KP_MINUS:
                                 sp.SLEEP_TIME += 5
-        	
+
                 if bird.colides():
                         done = True
                         break
@@ -108,7 +108,7 @@ def main():
 
                 pg.display.flip()
         #frame_clock += 1
-        print('Game over! Score: %i' % score)
+        print('Game over! Score: {0} Clock: {1}'.format(score, clock))
         pg.quit()
 
 
