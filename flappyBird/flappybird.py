@@ -108,6 +108,20 @@ def game_loop(neural_network=None):
     print('Game over! Score: {0} Clock: {1}'.format(score, clock))
     pg.quit()
 
-#def evaluate()
+# Return true if the decision is to jump
+def evaluate(nn, pipe1, pipe2, bird):
+    bird_y = bird.y
+    bird_acc = bird.jump
+    pipe1_x = pipe1.posx
+    pipe2_x = pipe2.posx
+    pipe1_y = pipe1.passage_center_y
+    pipe2_y = pipe2.passage_center_y
+
+    nn_input = [bird_y, bird_acc, pipe1_x, pipe1_y, pipe2_x, pipe2_y]
+
+    nn_output = nn.feedforward(nn_input)
+    # To jump or not to jump, that is the question
+    jump = np.sign(nn_output) > 0
+    return jump
 
 game_loop()

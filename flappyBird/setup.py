@@ -44,10 +44,10 @@ CHILD_AVERAGE = True
 # ---------------------
 
 # === Neural Network ===
-NUM_INPUTS = 2
+NUM_INPUTS = 6
 
 HIDDEN_LAYERS = 1
 
-NODES_PER_LAYER = 3
+NODES_PER_LAYER = 10
 # ----------------------
 # -----------------------------------------------------------------------------
