@@ -13,6 +13,8 @@ class Neural_Network:
     def __init__(self, weights):
         if npl <= 0 or hl < 1:
             raise Exception("Neural Network settings not supported")
+        if len(weights) != NUM_WEIGHTS:
+            raise Exception("Incorrect number of Neural Network weights")
 
         self.weights = weights
 
