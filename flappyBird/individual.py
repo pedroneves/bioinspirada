@@ -1,13 +1,10 @@
-from neural_network import N_LAYERS, NODES_PER_LAYER
-from random import uniform
 from math import pi
-
-SIGMA_MIN = 0.0001
-SIGMA_MAX = 5
+from random import uniform
+from setup import NUM_LAYERS, NODES_PER_LAYER
 
 class Individual:
     def __init__(self, objvars=None, sigmas=None, alphas=None):
-        self.dims = N_LAYERS*NODES_PER_LAYER
+        self.dims = NUM_LAYERS*NODES_PER_LAYER
         
         # Object variables initialization
         if objvars == None:
@@ -27,6 +24,7 @@ class Individual:
         else:
             self.alphas = alphas
 
+        # Plays the game to compute fitness
         self.fitness = play_game()
 
 

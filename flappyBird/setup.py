@@ -1,9 +1,4 @@
-
-
-
-
-
-#game
+# Game
 WIN_BACKGROUND_SIZE = 284
 WIN_WIDTH = WIN_BACKGROUND_SIZE * 3
 WIN_HEIGHT = 512
@@ -23,6 +18,14 @@ PASS_X = 10
 
 PIPE_SPACE = 32
 
+# Individual
+SIGMA_MIN = 0.0001
+SIGMA_MAX = 5
+NUM_GAMEPLAYS = 3
 
+# Recombination
+CHILD_AVERAGE = True
 
-
+# Neural Network
+NUM_LAYERS = 3
+NODES_PER_LAYER = 5
