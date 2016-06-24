@@ -7,10 +7,12 @@ WIN_HEIGHT = 512
 
 
 BIRD_ANIMATE = 10
-PIPE_ANIMATE = 5
+# PIPE_ANIMATE = 3 seems to be a good value
+PIPE_ANIMATE = 3
 
 GRAVITY = 2.5
 
+# JUMP_TIME = -GRAVITY * 2 seems to be a good value
 JUMP_TIME = -GRAVITY * 2
 
 SLEEP_TIME = 10

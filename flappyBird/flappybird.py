@@ -10,7 +10,7 @@ from pipe import Pipe
 
 
 
-def main():
+def game_loop():
         pg.init()
 
         display_surface = pg.display.set_mode((sp.WIN_WIDTH, sp.WIN_HEIGHT))
@@ -117,4 +117,4 @@ def main():
 
 
 
-main()
+game_loop()
