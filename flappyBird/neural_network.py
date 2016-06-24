@@ -20,7 +20,7 @@ class Neural_Network:
         if len(values) != ninputs:
             raise Exception("Incorrect number of neural network inputs")
 
-        return rec_feedforward(inputs, 1, 0, 0)
+        return rec_feedforward(inputs, 1, 0)
 
     def rec_feedforward(self, past, layer, weight_idx):
         if layer == 2+hl:
