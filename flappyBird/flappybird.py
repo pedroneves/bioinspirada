@@ -37,7 +37,7 @@ def play(neural_network=None):
     #pipes.append(pipe(np.random.randint(sp.WIN_HEIGHT - sp.PIP_SPACE)))
     pipes.append(Pipe(images['pipe-end'], images['pipe-body']))
     while not done:
-        pg.time.delay(sp.SLEEP_TIME)
+        # pg.time.delay(sp.SLEEP_TIME)
         clock += 1
         if clock % 100 == 0:
             pipes.append(Pipe(images['pipe-end'], images['pipe-body']))
@@ -64,7 +64,7 @@ def play(neural_network=None):
             to_jump = evaluate(neural_network, bird, pipes[0], pipes[0])
         else:
             to_jump = evaluate(neural_network, bird, pipes[0], pipes[1])
-        
+
         if to_jump:
             bird.jump = sp.JUMP_TIME
 
@@ -81,16 +81,16 @@ def play(neural_network=None):
     #if pipe_collision or 0 >= bird.y or bird.y >= WIN_HEIGHT - Bird.HEIGHT:
     #    done = True
 
-        for x in range(0, sp.WIN_WIDTH, sp.WIN_BACKGROUND_SIZE):
-            display_surface.blit(images['background'], (x, 0))
+        # for x in range(0, sp.WIN_WIDTH, sp.WIN_BACKGROUND_SIZE):
+            # display_surface.blit(images['background'], (x, 0))
 
         for p in pipes:
             p.update()
-            display_surface.blit(p.image, p.rect)
+            # display_surface.blit(p.image, p.rect)
 
         for p in pipesTrash:
             p.update()
-            display_surface.blit(p.image, p.rect)
+            # display_surface.blit(p.image, p.rect)
 
         if len(pipes) > 0 and pipes[0].posx + Pipe.WIDTH < bird.x:
             pipesTrash.append(pipes.popleft())
@@ -106,7 +106,7 @@ def play(neural_network=None):
     #    display_surface.blit(p.image, p.rect)
 
         bird.update()
-        display_surface.blit(bird.image, bird.rect)
+        # display_surface.blit(bird.image, bird.rect)
 
     # update and display score
     #for p in pipes:
@@ -116,9 +116,9 @@ def play(neural_network=None):
 
         score_surface = score_font.render(str(score), True, (255, 255, 255))
         score_x = sp.WIN_WIDTH/2 - score_surface.get_width()/2
-        display_surface.blit(score_surface, (score_x, sp.PIPE_SPACE))
+        # display_surface.blit(score_surface, (score_x, sp.PIPE_SPACE))
 
-        pg.display.flip()
+        # pg.display.flip()
     #frame_clock += 1
     pg.quit()
     return {'score': score, 'clock': clock}
@@ -138,4 +138,3 @@ def evaluate(nn, bird, pipe1, pipe2):
     # To jump or not to jump, that is the question
     jump = np.sign(nn_output) > 0
     return jump
-
