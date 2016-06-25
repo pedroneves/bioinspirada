@@ -4,6 +4,7 @@ import recombination
 import survivor_selection
 import sys
 from copy import deepcopy
+from flappybird import initialize as game_init, terminate as game_end
 from individual import Individual
 from setup import (CHILDREN_POP_RATIO,
                    MAX_ITERATIONS,
@@ -19,6 +20,7 @@ class Evo_Strategy:
         if NUM_MUTATION_TRIALS < 1:
             raise Exception("NUM_MUTATION_TRIALS must be at elast 1")
 
+        
         self.mutation = getattr(sys.modules['mutation'], MUTATION_FN)
         self.parent_selection = getattr(sys.modules['parent_selection'], 
                                         PARENT_SELECTION_FN)
@@ -27,18 +29,26 @@ class Evo_Strategy:
         self.survivor_selection = getattr(sys.modules['survivor_selection'], 
                                           SURVIVOR_SELECTION_FN)
 
+        game_init()
         self.population = self.generate_random_pop(POPULATION_SIZE)
+        game_end()
         self.solution = None
 
 
     def evolve(self):
+        game_init()
+
         it_num = 0
 
         while it_num < MAX_ITERATIONS:
             print "Iteration #" + str(it_num) + ":"
             self.iteration()
+            print "Best solution game..."
+            self.solution.compute_fitness(display=True)
+
             it_num += 1
 
+        game_end()
         return self.solution
 
 

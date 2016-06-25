@@ -31,7 +31,7 @@ PIPE_SPACE = 32
 # ========================== EVOLUTIONARY STRATEGY ============================
 # =============================================================================
 
-MAX_ITERATIONS = 50
+MAX_ITERATIONS = 25
 
 GENERATIONAL = True
 

@@ -51,12 +51,12 @@ class Individual:
 
         return list_
 
-    def compute_fitness(self):
+    def compute_fitness(self, display=False):
         nn = self.get_neural_network()
         
         scores = list()
         for i in range(NUM_GAMEPLAYS):
-            score = game.play(nn)
+            score = game.play(nn, display)
             scores.append(score)
 
         mean_score = sum(map(lambda x: x['score'], scores)) / len(scores)

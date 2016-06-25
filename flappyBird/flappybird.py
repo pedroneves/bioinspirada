@@ -8,45 +8,40 @@ from neural_network import Neural_Network, NUM_WEIGHTS
 from pipe import Pipe
 from pygame.locals import *
 
+image_wrapper = list()
 
-def testfn():
-    from random import uniform
-    weights = [uniform(-1, 1) for i in range(NUM_WEIGHTS)]
-    net = Neural_Network(weights)
-    ret = play(net)
-    return ret
-
-def play(neural_network=None):
+def initialize():
     pg.init()
+    display_surface = pg.display.set_mode((sp.WIN_WIDTH, sp.WIN_HEIGHT))
+    image_wrapper.append(utils.load_images())
+
+def terminate():
+    pg.quit()
+
+def play(neural_network=None, display=True):
+    #pg.init()
 
     display_surface = pg.display.set_mode((sp.WIN_WIDTH, sp.WIN_HEIGHT))
     pg.display.set_caption('Pygame Flappy Bird')
-
-    images = utils.load_images()
     score_font = pg.font.SysFont(None, 32, bold=True)  # default font
+    images = image_wrapper[0]
 
     bird = Bird(50, int(sp.WIN_HEIGHT/2 - Bird.HEIGHT/2), sp.BIRD_ANIMATE,
                 (images['bird-wingup'], images['bird-wingdown']))
 
     pipes = deque()
     pipesTrash = deque()
+    pipes.append(Pipe(images['pipe-end'], images['pipe-body']))
 
     score = 0
     done = False
     clock = 0
-    #pipes.append(pipe(np.random.randint(sp.WIN_HEIGHT - sp.PIP_SPACE)))
-    pipes.append(Pipe(images['pipe-end'], images['pipe-body']))
+
     while not done:
         # pg.time.delay(sp.SLEEP_TIME)
         clock += 1
         if clock % 100 == 0:
             pipes.append(Pipe(images['pipe-end'], images['pipe-body']))
-
-    # Handle this 'manually'.  If we used pygame.time.set_timer(),
-    # pipe addition would be messed up when paused.
-    #if not (paused or frame_clock % msec_to_frames(PipePair.ADD_INTERVAL)):
-    #    pp = PipePair(images['pipe-end'], images['pipe-body'])
-    #    pipes.append(pp)
 
         for e in pg.event.get():
             if e.type == QUIT or (e.type == KEYUP and e.key == K_ESCAPE):
@@ -60,9 +55,9 @@ def play(neural_network=None):
         to_jump = False
         if len(pipes) == 0:
             raise Exception("No pipes")
-        if len(pipes) == 1:
+        if len(pipes) == 1 and not (neural_network is None):
             to_jump = evaluate(neural_network, bird, pipes[0], pipes[0])
-        else:
+        elif not (neural_network is None):
             to_jump = evaluate(neural_network, bird, pipes[0], pipes[1])
 
         if to_jump:
@@ -76,21 +71,19 @@ def play(neural_network=None):
             done = True
             break
 
-    # check for collisions
-    #pipe_collision = any(p.collides_with(bird) for p in pipes)
-    #if pipe_collision or 0 >= bird.y or bird.y >= WIN_HEIGHT - Bird.HEIGHT:
-    #    done = True
-
-        # for x in range(0, sp.WIN_WIDTH, sp.WIN_BACKGROUND_SIZE):
-            # display_surface.blit(images['background'], (x, 0))
+        if display:
+            for x in range(0, sp.WIN_WIDTH, sp.WIN_BACKGROUND_SIZE):
+                display_surface.blit(images['background'], (x, 0))
 
         for p in pipes:
             p.update()
-            # display_surface.blit(p.image, p.rect)
+            if display:
+                display_surface.blit(p.image, p.rect)
 
         for p in pipesTrash:
             p.update()
-            # display_surface.blit(p.image, p.rect)
+            if display:
+                display_surface.blit(p.image, p.rect)
 
         if len(pipes) > 0 and pipes[0].posx + Pipe.WIDTH < bird.x:
             pipesTrash.append(pipes.popleft())
@@ -98,29 +91,24 @@ def play(neural_network=None):
 
         if len(pipesTrash) > 0 and pipesTrash[0].posx + Pipe.WIDTH < 0:
             pipesTrash.popleft()
-    #while pipes and not pipes[0].visible:
-    #    pipes.popleft()
-
-    #for p in pipes:
-    #    p.update()
-    #    display_surface.blit(p.image, p.rect)
 
         bird.update()
-        # display_surface.blit(bird.image, bird.rect)
+        if display:
+            display_surface.blit(bird.image, bird.rect)
 
-    # update and display score
-    #for p in pipes:
-    #    if p.x + PipePair.WIDTH < bird.x and not p.score_counted:
-    #        score += 1
-    #        p.score_counted = True
+        if display:
+            score_surface = score_font.render(str(score), True, (255, 255, 255))
+            score_x = sp.WIN_WIDTH/2 - score_surface.get_width()/2
+            display_surface.blit(score_surface, (score_x, sp.PIPE_SPACE))
 
-        score_surface = score_font.render(str(score), True, (255, 255, 255))
-        score_x = sp.WIN_WIDTH/2 - score_surface.get_width()/2
-        # display_surface.blit(score_surface, (score_x, sp.PIPE_SPACE))
+        if display:
+            pg.display.flip()
+    
+    if display:
+        display_surface.fill( (0, 0, 0) )
+        pg.display.flip()
 
-        # pg.display.flip()
-    #frame_clock += 1
-    pg.quit()
+    #pg.quit()
     return {'score': score, 'clock': clock}
 
 # Return true if the decision is to jump
