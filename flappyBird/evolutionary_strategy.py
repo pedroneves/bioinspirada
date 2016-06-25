@@ -52,6 +52,8 @@ class Evo_Strategy:
 
             # Generate a child
             child = self.recombination(parents[0], parents[1])
+            if self.solution is None or child > self.solution:
+                self.solution = deepcopy(child)
             
             # Generate NUM_MUTATION_TRIALS mutated versions of the child
             trials = list()
