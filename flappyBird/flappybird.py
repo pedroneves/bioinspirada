@@ -13,9 +13,10 @@ def testfn():
     from random import uniform
     weights = [uniform(-1, 1) for i in range(NUM_WEIGHTS)]
     net = Neural_Network(weights)
-    game_loop(net)
+    ret = play(net)
+    return ret
 
-def game_loop(neural_network=None):
+def play(neural_network=None):
     pg.init()
 
     display_surface = pg.display.set_mode((sp.WIN_WIDTH, sp.WIN_HEIGHT))
@@ -119,8 +120,8 @@ def game_loop(neural_network=None):
 
         pg.display.flip()
     #frame_clock += 1
-    print('Game over! Score: {0} Clock: {1}'.format(score, clock))
     pg.quit()
+    return {'score': score, 'clock': clock}
 
 # Return true if the decision is to jump
 def evaluate(nn, bird, pipe1, pipe2):
@@ -138,5 +139,3 @@ def evaluate(nn, bird, pipe1, pipe2):
     jump = np.sign(nn_output) > 0
     return jump
 
-
-#game_loop()

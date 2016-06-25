@@ -1,10 +1,18 @@
 import neural_network
+import flappybird as game
 from math import pi
 from random import uniform
-from setup import SIGMA_MIN, SIGMA_MAX, MUTATION_TYPE
+from setup import SIGMA_MIN, SIGMA_MAX, MUTATION_TYPE, NUM_GAMEPLAYS
 
 class Individual:
-    def __init__(self, objvars=None, sigmas=None, alphas=None):
+    def __cmp__(self, other):
+        if self.fitness['score'] != other.fitness['score']:
+            return self.fitness['score'] - other.fitness['score']
+        else:
+            return self.fitness['clock'] - other.fitness['clock']
+
+    def __init__(self, objvars=None, sigmas=None, alphas=None, 
+                 compute_fitness=True):
         self.dims = neural_network.NUM_WEIGHTS
         
         # Object variables initialization
@@ -30,8 +38,10 @@ class Individual:
         else:
             self.alphas = alphas
         
-        # Plays the game to compute fitness
-        self.compute_fitness();
+        if compute_fitness:
+           # Plays the game to compute fitness
+            self.fitness = {}
+            self.compute_fitness();
 
     def random_list(self, size, minval=-1, maxval=1):
         list_ = list()
@@ -41,6 +51,18 @@ class Individual:
 
         return list_
 
-    # TODO
     def compute_fitness(self):
-        return
+        nn = self.get_neural_network()
+        
+        scores = list()
+        for i in range(NUM_GAMEPLAYS):
+            score = game.play(nn)
+            scores.append(score)
+
+        mean_score = sum(map(lambda x: x['score'], scores)) / len(scores)
+        mean_clock = sum(map(lambda x: x['clock'], scores)) / len(scores)
+
+        self.fitness = {'score': mean_score, 'clock': mean_clock}
+
+    def get_neural_network(self):
+        return neural_network.Neural_Network(self.objvars)
