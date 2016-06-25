@@ -4,7 +4,7 @@ import recombination
 import survivor_selection
 import sys
 from copy import deepcopy
-from flappybird import initialize as game_init, terminate as game_end
+from flappybird import initialize as game_init, terminate as game_end, play
 from individual import Individual
 from setup import (CHILDREN_POP_RATIO,
                    MAX_ITERATIONS,
@@ -13,7 +13,9 @@ from setup import (CHILDREN_POP_RATIO,
                    PARENT_SELECTION_FN,
                    POPULATION_SIZE,
                    RECOMBINATION_FN,
-                   SURVIVOR_SELECTION_FN)
+                   SURVIVOR_SELECTION_FN,
+                   TARGET_SCORE)
+
 
 class Evo_Strategy:
     def __init__(self):
@@ -40,11 +42,14 @@ class Evo_Strategy:
 
         it_num = 0
 
-        while it_num < MAX_ITERATIONS:
-            print "Iteration #" + str(it_num) + ":"
-            self.iteration()
-            print "Best solution game..."
-            self.solution.compute_fitness(display=True)
+        while (it_num < MAX_ITERATIONS and 
+               (self.solution is None 
+                or TARGET_SCORE == 0 or 
+                self.solution.fitness['score'] < TARGET_SCORE)):
+            self.iteration(it_num)
+            print "\nBest on this iteration...\n"
+            nn = self.population[0].get_neural_network()
+            play(nn)
 
             it_num += 1
 
@@ -52,11 +57,14 @@ class Evo_Strategy:
         return self.solution
 
 
-    def iteration(self):
+    def iteration(self, it_num=-1):
         children = list()
 
         while len(children) < CHILDREN_POP_RATIO * POPULATION_SIZE:
-            print "   Child #" + str(len(children)+1) + ":"
+            if it_num == -1:
+                print "Child #" + str(len(children)+1) + ":"    
+            else:
+                print "Iteration #" + str(it_num) + " -> Child #" + str(len(children)+1)
             # Select parents
             parents = self.parent_selection(self.population)
 
@@ -68,7 +76,6 @@ class Evo_Strategy:
             # Generate NUM_MUTATION_TRIALS mutated versions of the child
             trials = list()
             for i in range(0, NUM_MUTATION_TRIALS):
-                print "      Mutation #" + str(i+1)
                 trials.append(self.mutation(child))
             
             # Add the most fit mutation to the children list
