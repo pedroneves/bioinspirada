@@ -2,6 +2,7 @@ import numpy as np
 import pygame as pg
 import setup as sp
 import utils
+import random as rd
 from bird import Bird
 from collections import deque
 from neural_network import Neural_Network, NUM_WEIGHTS
@@ -36,11 +37,16 @@ def play(neural_network=None, display=True):
     score = 0
     done = False
     clock = 0
+    last_pipe_clock_dist = 0
 
     while not done:
         # pg.time.delay(sp.SLEEP_TIME)
+
         clock += 1
-        if clock % 100 == 0:
+        last_pipe_clock_dist += 1
+
+        if ( last_pipe_clock_dist >= sp.MIN_PIPE_DIST and last_pipe_clock_dist <= sp.MAX_PIPE_DIST and (last_pipe_clock_dist % sp.PIPE_PLACEMENT_INTERVAL == 0) and rd.random() <= sp.PIPE_PLACEMENT_PROB ) or last_pipe_clock_dist > sp.MAX_PIPE_DIST:
+            last_pipe_clock_dist = 0
             pipes.append(Pipe(images['pipe-end'], images['pipe-body']))
 
         for e in pg.event.get():
@@ -103,7 +109,7 @@ def play(neural_network=None, display=True):
 
         if display:
             pg.display.flip()
-    
+
     if display:
         display_surface.fill( (0, 0, 0) )
         pg.display.flip()

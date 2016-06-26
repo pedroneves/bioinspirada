@@ -24,6 +24,14 @@ PASS_X = 10
 
 PIPE_SPACE = 32
 
+MIN_PIPE_DIST = 100
+
+MAX_PIPE_DIST = 175
+
+PIPE_PLACEMENT_INTERVAL = 15
+
+PIPE_PLACEMENT_PROB = 0.5
+
 # -----------------------------------------------------------------------------
 
 
@@ -81,6 +89,6 @@ NUM_INPUTS = 6
 
 HIDDEN_LAYERS = 1
 
-NODES_PER_LAYER = 10
+NODES_PER_LAYER = 12
 
 # -----------------------------------------------------------------------------
