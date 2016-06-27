@@ -39,6 +39,12 @@ PIPE_PLACEMENT_PROB = 0.5
 # ========================== EVOLUTIONARY STRATEGY ============================
 # =============================================================================
 
+# DISPLAY_BEST to display the game. Values:
+#   'iteration' - Shows the best of each iteration
+#   'best'      - Shows only the one who had score >= TARGET_SCORE
+#   Any value   - Any value different than previous ones, never display the game
+DISPLAY_BEST = 'best'
+
 MAX_ITERATIONS = 25
 
 TARGET_SCORE = 100
@@ -90,5 +96,13 @@ NUM_INPUTS = 6
 HIDDEN_LAYERS = 1
 
 NODES_PER_LAYER = 12
+
+# -----------------------------------------------------------------------------
+
+# =============================================================================
+# ================================= LOGGING ===================================
+# =============================================================================
+
+LOG_DIR_NAME = 'logs'
 
 # -----------------------------------------------------------------------------

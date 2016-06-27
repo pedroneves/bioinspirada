@@ -6,7 +6,8 @@ import sys
 from copy import deepcopy
 from flappybird import initialize as game_init, terminate as game_end, play
 from individual import Individual
-from setup import (CHILDREN_POP_RATIO,
+from setup import (DISPLAY_BEST,
+                   CHILDREN_POP_RATIO,
                    MAX_ITERATIONS,
                    MUTATION_FN,
                    NUM_MUTATION_TRIALS,
@@ -22,13 +23,13 @@ class Evo_Strategy:
         if NUM_MUTATION_TRIALS < 1:
             raise Exception("NUM_MUTATION_TRIALS must be at elast 1")
 
-        
+
         self.mutation = getattr(sys.modules['mutation'], MUTATION_FN)
-        self.parent_selection = getattr(sys.modules['parent_selection'], 
+        self.parent_selection = getattr(sys.modules['parent_selection'],
                                         PARENT_SELECTION_FN)
-        self.recombination = getattr(sys.modules['recombination'], 
+        self.recombination = getattr(sys.modules['recombination'],
                                      RECOMBINATION_FN)
-        self.survivor_selection = getattr(sys.modules['survivor_selection'], 
+        self.survivor_selection = getattr(sys.modules['survivor_selection'],
                                           SURVIVOR_SELECTION_FN)
 
         game_init()
@@ -42,14 +43,19 @@ class Evo_Strategy:
 
         it_num = 0
 
-        while (it_num < MAX_ITERATIONS and 
-               (self.solution is None 
-                or TARGET_SCORE == 0 or 
-                self.solution.fitness['score'] < TARGET_SCORE)):
+        while (it_num < MAX_ITERATIONS and
+               (
+                self.solution is None or
+                TARGET_SCORE == 0 or
+                self.solution.fitness['score'] < TARGET_SCORE
+               )
+            ):
             self.iteration(it_num)
-            print "\nBest on this iteration...\n"
-            nn = self.population[0].get_neural_network()
-            play(nn)
+
+            if DISPLAY_BEST == 'iteration' or (DISPLAY_BEST == 'best' and self.solution.fitness['score'] > TARGET_SCORE):
+                print "\nBest on this iteration...\n"
+                nn = self.population[0].get_neural_network()
+                play(nn)
 
             it_num += 1
 
@@ -62,7 +68,7 @@ class Evo_Strategy:
 
         while len(children) < CHILDREN_POP_RATIO * POPULATION_SIZE:
             if it_num == -1:
-                print "Child #" + str(len(children)+1) + ":"    
+                print "Child #" + str(len(children)+1) + ":"
             else:
                 print "Iteration #" + str(it_num) + " -> Child #" + str(len(children)+1)
             # Select parents
@@ -72,12 +78,12 @@ class Evo_Strategy:
             child = self.recombination(parents[0], parents[1])
             if self.solution is None or child > self.solution:
                 self.solution = deepcopy(child)
-            
+
             # Generate NUM_MUTATION_TRIALS mutated versions of the child
             trials = list()
             for i in range(0, NUM_MUTATION_TRIALS):
                 trials.append(self.mutation(child))
-            
+
             # Add the most fit mutation to the children list
             best_mutation = max(trials)
             children.append(best_mutation)
