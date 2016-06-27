@@ -3,9 +3,12 @@ import parent_selection
 import recombination
 import survivor_selection
 import sys
+import time
+import datetime
 from copy import deepcopy
 from flappybird import initialize as game_init, terminate as game_end, play
 from individual import Individual
+from logger import Log
 from setup import (DISPLAY_BEST,
                    CHILDREN_POP_RATIO,
                    MAX_ITERATIONS,
@@ -42,6 +45,7 @@ class Evo_Strategy:
         game_init()
 
         it_num = 0
+        log = Log(datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d_%H:%M:%S.csv'))
 
         while (it_num < MAX_ITERATIONS and
                (
@@ -52,12 +56,18 @@ class Evo_Strategy:
             ):
             self.iteration(it_num)
 
+            log.push(it_num, self.population)
+
             if DISPLAY_BEST == 'iteration' or (DISPLAY_BEST == 'best' and self.solution.fitness['score'] > TARGET_SCORE):
                 print "\nBest on this iteration...\n"
                 nn = self.population[0].get_neural_network()
                 play(nn)
 
             it_num += 1
+
+        print '\nEvolution terminated with score: {0} and clock: {1}\n'.format(self.solution.fitness['score'], self.solution.fitness['clock'])
+
+        log.save()
 
         game_end()
         return self.solution

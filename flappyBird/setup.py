@@ -43,7 +43,7 @@ PIPE_PLACEMENT_PROB = 0.5
 #   'iteration' - Shows the best of each iteration
 #   'best'      - Shows only the one who had score >= TARGET_SCORE
 #   Any value   - Any value different than previous ones, never display the game
-DISPLAY_BEST = 'best'
+DISPLAY_BEST = 'none'
 
 MAX_ITERATIONS = 25
 
