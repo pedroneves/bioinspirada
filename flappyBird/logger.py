@@ -39,7 +39,7 @@ class Log:
 
     def save(self):
         checkLogDir()
-        f = open(self.path, 'a')
+        f = open(self.path, 'w+')
         s = ''
         i = 0
 
