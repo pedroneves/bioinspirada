@@ -45,7 +45,7 @@ class Evo_Strategy:
         game_init()
 
         it_num = 0
-        log = Log(datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d_%H:%M:%S.csv'))
+        log = Log(datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d_%H-%M-%S.csv'))
 
         while (it_num < MAX_ITERATIONS and
                (
