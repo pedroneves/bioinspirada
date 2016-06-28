@@ -1,4 +1,4 @@
-from evolutionary_strategy import Evo_Strategy
+from evolutionary_strategy import Evo_Strategy as Pokemon
 
-es = Evo_Strategy()
-es.evolve()
+pokemon = Pokemon()
+pokemon.evolve()
