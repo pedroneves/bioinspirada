@@ -39,8 +39,9 @@ class Log:
 
     def save(self):
         checkLogDir()
-        
+
         f = open(self.path, 'a')
+        
         s = ''
         i = 0
 
